@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSurplus } from '../context/SurplusContext';
 import {
   STOCK_BADGE_MAP,
@@ -19,6 +19,7 @@ import {
   Plus,
   Minus,
   Check,
+  X,
   ShoppingBag,
   Sparkles,
   CheckCircle2,
@@ -76,6 +77,7 @@ export default function StorefrontLayout() {
   const [copiedWayfinding, setCopiedWayfinding] = useState(false);
   const [justAddedMap, setJustAddedMap] = useState({});
   const [toastNotice, setToastNotice] = useState(null);
+  const toastTimerRef = useRef(null);
 
   const getHoldQty = (itemId) => {
     const found = holdList.find((i) => i.id === itemId);
@@ -93,6 +95,12 @@ export default function StorefrontLayout() {
       price: item.price,
       timestamp: Date.now()
     });
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+    toastTimerRef.current = setTimeout(() => {
+      setToastNotice(null);
+    }, 5000);
     setTimeout(() => {
       setJustAddedMap((prev) => ({ ...prev, [item.id]: false }));
     }, 1100);
@@ -1701,10 +1709,10 @@ export default function StorefrontLayout() {
         </footer>
       </div>
 
-      {/* FLOATING LIVE 24-HR PULL-SHEET TOAST & QUICK DRAWER LAUNCHER (ALL 3 VIEWS) */}
-      {holdItemCount > 0 && (
-        <div className="fixed bottom-4 right-4 z-40 max-w-md w-[calc(100vw-2rem)] sm:w-auto bg-[#0D131C] border-2 border-emerald-400 text-white shadow-2xl rounded-lg overflow-hidden">
-          {toastNotice && getHoldQty(toastNotice.id) > 0 && (
+      {/* 5-SECOND AUTO-DISMISSING PULL-SHEET TOAST (DESKTOP ONLY — CENTERED BOTTOM) */}
+      {toastNotice && holdItemCount > 0 && (
+        <div className="hidden md:block fixed bottom-5 left-1/2 -translate-x-1/2 z-40 w-full max-w-lg bg-[#0D131C] border-2 border-emerald-400 text-white shadow-2xl rounded-lg overflow-hidden">
+          {getHoldQty(toastNotice.id) > 0 && (
             <div className="bg-emerald-950/90 border-b border-emerald-500/40 px-3.5 py-2 flex items-center justify-between gap-3 text-xs">
               <div className="flex items-center gap-2 min-w-0">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping shrink-0" />
@@ -1712,18 +1720,28 @@ export default function StorefrontLayout() {
                   ✓ Pulled: {toastNotice.name} ({getHoldQty(toastNotice.id)}x)
                 </span>
               </div>
-              <button
-                type="button"
-                onClick={() => updateHoldQty(toastNotice.id, -1)}
-                className="px-2 py-0.5 bg-zinc-900 hover:bg-rose-700 border border-zinc-700 text-[10px] font-mono font-bold text-zinc-200 rounded cursor-pointer shrink-0"
-                title="Accidentally clicked extra times? Remove 1"
-              >
-                -1 Undo
-              </button>
+              <div className="flex items-center gap-1.5 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => updateHoldQty(toastNotice.id, -1)}
+                  className="px-2 py-0.5 bg-zinc-900 hover:bg-rose-700 border border-zinc-700 text-[10px] font-mono font-bold text-zinc-200 rounded cursor-pointer"
+                  title="Accidentally clicked extra times? Remove 1"
+                >
+                  -1 Undo
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setToastNotice(null)}
+                  className="p-0.5 text-zinc-400 hover:text-white cursor-pointer"
+                  title="Dismiss notification"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           )}
 
-          <div className="p-3 sm:px-4 flex flex-wrap items-center justify-between gap-3">
+          <div className="p-3 sm:px-4 flex items-center justify-between gap-3">
             <div className="space-y-0.5">
               <div className="flex items-center gap-2">
                 <span className="bg-emerald-500 text-black font-mono text-[10px] font-black px-1.5 py-0.5 uppercase rounded-xs">
@@ -1731,6 +1749,9 @@ export default function StorefrontLayout() {
                 </span>
                 <span className="font-mono text-sm font-black text-yellow-400">
                   ${holdTotalCost} Total
+                </span>
+                <span className="text-[10px] font-mono text-zinc-400">
+                  (Auto-hides in 5s)
                 </span>
               </div>
               {showCifComparison && holdTotalSavings > 0 && (
@@ -1740,17 +1761,23 @@ export default function StorefrontLayout() {
               )}
             </div>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 shrink-0">
               <button
                 type="button"
-                onClick={() => setIsHoldDrawerOpen(true)}
+                onClick={() => {
+                  setToastNotice(null);
+                  setIsHoldDrawerOpen(true);
+                }}
                 className="px-3.5 py-2 bg-yellow-400 hover:bg-yellow-300 text-black font-mono font-black text-xs uppercase tracking-wider rounded-xs cursor-pointer shadow"
               >
                 Open Pull Sheet ({holdItemCount}) →
               </button>
               <button
                 type="button"
-                onClick={clearHoldList}
+                onClick={() => {
+                  clearHoldList();
+                  setToastNotice(null);
+                }}
                 className="px-2 py-2 bg-zinc-900 hover:bg-rose-900/80 border border-zinc-700 text-[10px] font-mono font-bold text-zinc-300 uppercase rounded-xs cursor-pointer"
                 title="Clear all items from Pull Sheet"
               >

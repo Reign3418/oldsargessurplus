@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useSurplus } from '../context/SurplusContext';
 import { STOCK_BADGE_MAP } from '../data/surplusData';
 import {
@@ -60,6 +60,8 @@ export default function MobileAppView() {
   const [showSearch, setShowSearch] = useState(false);
   const [addedIds, setAddedIds] = useState({});
   const [copiedAddr, setCopiedAddr] = useState(false);
+  const [mobileToastVisible, setMobileToastVisible] = useState(false);
+  const mobileToastTimerRef = useRef(null);
 
   const isDaylight = themeVersion === 'daylight';
   const isOlive = themeVersion === 'olivedrab';
@@ -102,6 +104,13 @@ export default function MobileAppView() {
   const handleAdd = (item, bayName) => {
     addToHoldList(item, bayName);
     setAddedIds((prev) => ({ ...prev, [item.id]: true }));
+    setMobileToastVisible(true);
+    if (mobileToastTimerRef.current) {
+      clearTimeout(mobileToastTimerRef.current);
+    }
+    mobileToastTimerRef.current = setTimeout(() => {
+      setMobileToastVisible(false);
+    }, 5000);
     setTimeout(() => {
       setAddedIds((prev) => ({ ...prev, [item.id]: false }));
     }, 1100);
@@ -186,6 +195,18 @@ export default function MobileAppView() {
                 </button>
               ))}
             </div>
+
+            {holdItemCount > 0 && (
+              <button
+                type="button"
+                onClick={() => setIsHoldDrawerOpen(true)}
+                className="px-2 h-8 flex items-center gap-1 bg-emerald-600 text-white font-mono text-[10px] font-black uppercase cursor-pointer"
+                title="Open 24-Hr Counter Pull Sheet"
+              >
+                <ShoppingBag className="w-3 h-3" />
+                <span>{holdItemCount}</span>
+              </button>
+            )}
 
             {activeTab === 'locker' && (
               <button
@@ -872,23 +893,38 @@ export default function MobileAppView() {
       )}
 
       {/* ================================================================= */}
-      {/* FLOATING 24-HR COUNTER HOLD BAR (WHEN ITEMS ADDED)                */}
+      {/* 5-SECOND AUTO-DISMISSING COUNTER HOLD TOAST (WHEN ITEM ADDED)     */}
       {/* ================================================================= */}
-      {holdItemCount > 0 && (
+      {mobileToastVisible && holdItemCount > 0 && (
         <div className="fixed bottom-16 left-3 right-3 z-40">
-          <button
-            type="button"
-            onClick={() => setIsHoldDrawerOpen(true)}
-            className={`w-full py-3 px-4 font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-2xl border-2 border-white cursor-pointer ${accentBg}`}
+          <div
+            className={`w-full py-2.5 px-3 font-black text-xs uppercase tracking-wider flex items-center justify-between shadow-2xl border-2 border-white ${accentBg}`}
           >
-            <div className="flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4" />
-              <span>24-Hr Counter Hold ({holdItemCount})</span>
-            </div>
-            <span className="font-mono text-xs font-black">
-              ${holdTotalCost} (Save ${holdTotalSavings}) →
-            </span>
-          </button>
+            <button
+              type="button"
+              onClick={() => {
+                setMobileToastVisible(false);
+                setIsHoldDrawerOpen(true);
+              }}
+              className="flex-1 flex items-center justify-between text-left cursor-pointer"
+            >
+              <div className="flex items-center gap-1.5">
+                <ShoppingBag className="w-4 h-4 shrink-0" />
+                <span>Pulled ({holdItemCount}) • Tap to View</span>
+              </div>
+              <span className="font-mono text-xs font-black pr-2">
+                ${holdTotalCost} →
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setMobileToastVisible(false)}
+              className="p-1 opacity-80 hover:opacity-100 cursor-pointer"
+              aria-label="Dismiss notification"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          </div>
         </div>
       )}
 
