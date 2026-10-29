@@ -1,0 +1,32 @@
+{
+  "name": "oldsargessurplus",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Old Sarge's Surplus (240 S Bragg Blvd, Spring Lake, NC 28390) — Official Fort Liberty Military Surplus, CIF Readiness & On-Site Sewing Portal",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "predeploy": "npm run build && node -e \"const fs = require('fs'); fs.copyFileSync('dist/index.html', 'dist/404.html');\"",
+    "deploy": "gh-pages -d dist",
+    "valkyrie": "python \"C:\\Users\\laure\\.gemini\\config\\skills\\project-valkyrie\\scripts\\valkyrie_engine.py\" --target . --tier forge --recon --llm",
+    "loki": "python \"C:\\Users\\laure\\.gemini\\config\\skills\\project-loki\\scripts\\loki_engine.py\" --url \"https://reign3418.github.io/oldsargessurplus/\" --mode advisory",
+    "thor": "python \"C:\\Users\\laure\\.gemini\\config\\skills\\project-thor\\scripts\\thor_engine.py\" --strike all --target . --biz-name \"Old Sarge's Surplus\" --url \"https://reign3418.github.io/oldsargessurplus/\""
+  },
+  "dependencies": {
+    "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^1.54.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwind-merge": "^3.7.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.3",
+    "@vitejs/plugin-react": "^6.1.2",
+    "gh-pages": "^6.3.0",
+    "tailwindcss": "^4.3.3",
+    "vite": "^8.3.4"
+  }
+}

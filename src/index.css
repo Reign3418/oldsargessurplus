@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Bebas Neue", sans-serif;
+  --font-sans: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+/* Global Mobile Overflow Safeguards: 100% Zero Side-Scrolling */
+html,
+body {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overscroll-behavior-x: none;
+}
+
+#root {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  position: relative;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  img,
+  svg,
+  video,
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* Respect Reduced Motion for WCAG 2.1 AA Compliance */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom Tactical Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0D10;
+}
+::-webkit-scrollbar-thumb {
+  background: #2A303C;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #EAB308;
+}
+
+/* Corrugated Hangar Steel Texture (Matches Official Logo Hangar) */
+.hangar-steel-bg {
+  background-color: #11141A;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+/* USGI Olive Drab Canvas Grid */
+.od-canvas-bg {
+  background-color: #131811;
+  background-image: radial-gradient(rgba(234, 179, 8, 0.06) 1px, transparent 0);
+  background-size: 20px 20px;
+}
