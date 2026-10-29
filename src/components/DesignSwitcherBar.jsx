@@ -18,6 +18,8 @@ export default function DesignSwitcherBar({ onLockSite }) {
   const {
     themeVersion,
     setThemeVersion,
+    isMobileMode,
+    setViewModeOverride,
     setIsWhitePaperOpen,
     setIsDisambiguationModalOpen,
     setIsCifCalculatorOpen,
@@ -155,6 +157,22 @@ export default function DesignSwitcherBar({ onLockSite }) {
 
         {/* Right: Operational Tools */}
         <div className="flex items-center gap-1.5 justify-end shrink-0">
+          <button
+            type="button"
+            onClick={() => setViewModeOverride(isMobileMode ? 'desktop' : 'mobile')}
+            className={`flex items-center gap-1 px-2.5 py-1 rounded-none text-xs font-black transition cursor-pointer border shadow-sm ${
+              isMobileMode
+                ? 'bg-yellow-400 text-black border-white'
+                : 'bg-[#161B24] hover:bg-[#222A38] text-yellow-300 border-yellow-500/40'
+            }`}
+            title="Toggle between Mobile App Mode (auto-enabled on phones) and Desktop Mode"
+          >
+            <Smartphone className="w-3.5 h-3.5 shrink-0" />
+            <span className="whitespace-nowrap">
+              {isMobileMode ? '📱 Mobile App: ON' : '📱 Mobile View'}
+            </span>
+          </button>
+
           <button
             type="button"
             onClick={() => setIsDisambiguationModalOpen(true)}

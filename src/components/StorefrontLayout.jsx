@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSurplus } from '../context/SurplusContext';
 import { STOCK_BADGE_MAP } from '../data/surplusData';
 import {
@@ -18,7 +18,12 @@ import {
   Filter,
   Sliders,
   Tv,
-  FileText
+  FileText,
+  Compass,
+  Navigation,
+  Car,
+  Copy,
+  Star
 } from 'lucide-react';
 
 export default function StorefrontLayout() {
@@ -47,6 +52,19 @@ export default function StorefrontLayout() {
 
   const isDaylight = themeVersion === 'daylight';
   const isOlive = themeVersion === 'olivedrab';
+  const [copiedWayfinding, setCopiedWayfinding] = useState(false);
+
+  const handleCopyWayfinding = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `${storeInfo.name} — ${storeInfo.address} (${storeInfo.phone}) • ${storeInfo.googleMapsDirectionsUrl}`
+      );
+      setCopiedWayfinding(true);
+      setTimeout(() => setCopiedWayfinding(false), 2000);
+    } catch {
+      // ignore
+    }
+  };
 
   // Theme-adaptive surface classes
   const cardBg = isDaylight
@@ -187,6 +205,14 @@ export default function StorefrontLayout() {
                   <Calculator className="w-4 h-4" />
                   <span>CIF Savings Calculator</span>
                 </button>
+
+                <a
+                  href="#wayfinding"
+                  className="inline-flex items-center gap-2 bg-sky-700 hover:bg-sky-600 text-white font-black text-xs uppercase tracking-wider px-4 py-3 border border-sky-400 shadow-lg"
+                >
+                  <Compass className="w-4 h-4" />
+                  <span>Don&apos;t Miss Our Turn (GPS Guide)</span>
+                </a>
 
                 <a
                   href={storeInfo.ebayUrl}
@@ -682,6 +708,156 @@ export default function StorefrontLayout() {
                     <Tv className="w-3.5 h-3.5" />
                     <span>Open 1080p Counter TV</span>
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* 5.5. BRAGG BLVD WAYFINDING & "DON'T MISS OUR TURN" GPS HUB        */}
+      {/* ================================================================= */}
+      <section
+        id="wayfinding"
+        aria-label="240 S Bragg Blvd Turn-by-Turn Wayfinding and GPS Navigation"
+        className="max-w-7xl mx-auto py-6 px-4 sm:px-6 space-y-6"
+      >
+        <div className={`border-2 border-yellow-400 p-5 sm:p-8 shadow-2xl ${cardBg}`}>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            {/* Left 7 Cols: GPS Launchers & 4 Approach Cues */}
+            <div className="lg:col-span-7 space-y-5">
+              <div>
+                <div className="inline-flex items-center gap-1.5 bg-yellow-400 text-black font-mono text-xs font-black px-2.5 py-0.5 uppercase">
+                  <Compass className="w-3.5 h-3.5" />
+                  <span>Fast 45 MPH Corridor Navigation • Don&apos;t Blow Past Our Turn!</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-black uppercase font-['Bebas_Neue'] tracking-wide mt-2">
+                  How to Spot &amp; Turn Into 240 S Bragg Blvd Without Passing Us
+                </h2>
+                <p className="text-xs sm:text-sm opacity-85 mt-1 leading-relaxed">
+                  Traffic moves fast coming off Fort Bragg onto S Bragg Blvd (NC-24 / NC-87), and first-time visitors can easily drive past our storefront if they are in the wrong lane. Lock in our exact rooftop pin below and check your approach lane before you roll:
+                </p>
+              </div>
+
+              {/* 3 Giant 1-Tap GPS App Launchers + Copy Pin */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <a
+                  href={storeInfo.appleMapsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`px-4 py-3 font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-md ${accentBtn}`}
+                >
+                  <Navigation className="w-4 h-4" />
+                  <span>Open in Apple Maps (CarPlay)</span>
+                </a>
+
+                <a
+                  href={storeInfo.googleMapsDirectionsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider flex items-center gap-2 shadow-md"
+                >
+                  <MapPin className="w-4 h-4" />
+                  <span>Google Maps Route</span>
+                </a>
+
+                <a
+                  href={storeInfo.wazeUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`px-4 py-3 border font-bold text-xs uppercase tracking-wider flex items-center gap-2 ${subtleBg} hover:border-yellow-400`}
+                >
+                  <Car className="w-4 h-4 text-sky-400" />
+                  <span>Launch Waze</span>
+                </a>
+
+                <button
+                  type="button"
+                  onClick={handleCopyWayfinding}
+                  className={`px-3.5 py-3 border font-mono font-bold text-xs uppercase flex items-center gap-1.5 cursor-pointer ${subtleBg} hover:border-yellow-400`}
+                >
+                  <Copy className="w-3.5 h-3.5 text-yellow-500" />
+                  <span>{copiedWayfinding ? '✓ Copied GPS Pin!' : 'Copy Pin for Squad'}</span>
+                </button>
+              </div>
+
+              {/* 4 Numbered Approach & Lane Cues */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                {storeInfo.wayfindingLandmarks.map((w, idx) => (
+                  <div
+                    key={idx}
+                    className={`p-4 border border-yellow-500/30 flex flex-col justify-between gap-2 ${subtleBg}`}
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="bg-yellow-400 text-black font-mono text-[10px] font-black px-2 py-0.5 uppercase">
+                          {idx + 1}. {w.badge}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-xs sm:text-sm leading-snug">
+                        {w.direction}
+                      </h3>
+                      <p className="text-xs opacity-85 leading-relaxed">{w.cue}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right 5 Cols: Rooftop GPS Telemetry, Store Hours & 5-Star Fort Bragg Reviews */}
+            <div className="lg:col-span-5 space-y-4">
+              <div className={`p-5 border-2 border-yellow-500/50 space-y-4 ${subtleBg}`}>
+                <div className="flex items-center justify-between border-b border-zinc-700/50 pb-3">
+                  <div>
+                    <span className="font-mono text-[10px] font-bold uppercase text-yellow-500 block">
+                      ROOFTOP GPS TELEMETRY PIN
+                    </span>
+                    <h3 className="text-xl font-black uppercase font-['Bebas_Neue'] tracking-wide">
+                      240 S Bragg Blvd • Spring Lake, NC 28390
+                    </h3>
+                  </div>
+                  <span className="font-mono text-[11px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 font-bold">
+                    35.1636° N, -78.9728° W
+                  </span>
+                </div>
+
+                {/* Hours Schedule */}
+                <div className="space-y-2 text-xs">
+                  <div className="font-mono font-bold uppercase text-yellow-500 flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>Verified Store &amp; Sewing Hours</span>
+                  </div>
+                  {storeInfo.hours.map((row) => (
+                    <div
+                      key={row.days}
+                      className="flex justify-between py-1.5 border-b border-zinc-700/30 last:border-none"
+                    >
+                      <span className="font-semibold">{row.days}</span>
+                      <span className="font-mono font-bold">{row.time}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Verified Fort Bragg Reviews */}
+                <div className="space-y-2 pt-2 border-t border-zinc-700/50">
+                  <div className="font-mono text-[11px] font-bold uppercase text-yellow-500">
+                    ★ Verified Fort Bragg &amp; Local Guide Feedback
+                  </div>
+                  {storeInfo.customerReviews.slice(0, 2).map((rev) => (
+                    <div key={rev.id} className={`p-3 border ${cardBg} space-y-1`}>
+                      <div className="flex items-center justify-between">
+                        <div className="flex gap-0.5 text-yellow-400">
+                          {[...Array(rev.rating)].map((_, i) => (
+                            <Star key={i} className="w-3 h-3 fill-current" />
+                          ))}
+                        </div>
+                        <span className="text-[10px] font-mono opacity-70">{rev.author}</span>
+                      </div>
+                      <div className="text-xs font-bold">{rev.highlight}</div>
+                      <p className="text-[11px] opacity-85 leading-relaxed">&ldquo;{rev.quote}&rdquo;</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

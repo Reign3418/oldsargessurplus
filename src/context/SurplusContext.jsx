@@ -11,6 +11,34 @@ const SurplusContext = createContext();
 export function SurplusProvider({ children }) {
   const [themeVersion, setThemeVersion] = useState('hangar'); // 'hangar' | 'olivedrab' | 'daylight'
 
+  // Automatic Mobile Device & Viewport Detection (Auto-switches to MobileAppView on phones)
+  const detectMobileViewportOrUA = () => {
+    if (typeof window === 'undefined') return false;
+    const isNarrow = window.innerWidth < 768;
+    const isTouchPhone = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent || ''
+    );
+    return isNarrow || isTouchPhone;
+  };
+
+  const [isAutoMobile, setIsAutoMobile] = useState(detectMobileViewportOrUA);
+  const [viewModeOverride, setViewModeOverride] = useState(null); // null (auto) | 'mobile' | 'desktop'
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsAutoMobile(detectMobileViewportOrUA());
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const isMobileMode =
+    viewModeOverride === 'mobile'
+      ? true
+      : viewModeOverride === 'desktop'
+      ? false
+      : isAutoMobile;
+
   // Live Inventory Bays (persisted in localStorage so owner edits survive refresh)
   const [inventoryBays, setInventoryBays] = useState(() => {
     try {
@@ -242,6 +270,9 @@ export function SurplusProvider({ children }) {
         storeInfo: STORE_INFO,
         themeVersion,
         setThemeVersion,
+        isMobileMode,
+        viewModeOverride,
+        setViewModeOverride,
         inventoryBays,
         sewingStatus,
         featuredDrops,

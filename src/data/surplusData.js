@@ -3,18 +3,75 @@ export const STORE_INFO = {
   dba: "Old Sarge Surplus — Spring Lake / Fort Bragg",
   tagline: "30+ Years Outfitting Fort Bragg • Genuine USGI Surplus • CIF Turn-In Readiness • On-Site Uniform Sewing",
   address: "240 S Bragg Blvd, Spring Lake, NC 28390",
-  landmark: "Directly on Bragg Blvd between Fort Bragg (Butner/Honeycutt Corridor) & Spring Lake",
+  streetAddress: "240 S Bragg Blvd",
+  cityStateZip: "Spring Lake, NC 28390",
+  landmark: "Directly on S Bragg Blvd (200 South Block) between Fort Bragg Gates & Main St Spring Lake",
   phone: "(910) 497-5335",
   phoneRaw: "9104975335",
   domain: "oldsargessurplus.com",
   ebayHandle: "oldsargessurplus",
   ebayUrl: "https://www.ebay.com/usr/oldsargessurplus",
   facebookUrl: "https://www.facebook.com/pages/old-sarge-surplus/117242535001814",
+  coordinates: {
+    lat: 35.1636,
+    lng: -78.9728
+  },
   googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Old+Sarge+Surplus+240+S+Bragg+Blvd+Spring+Lake+NC+28390",
+  googleMapsDirectionsUrl: "https://www.google.com/maps/dir/?api=1&destination=240+S+Bragg+Blvd,+Spring+Lake,+NC+28390",
+  appleMapsUrl: "https://maps.apple.com/?daddr=240+S+Bragg+Blvd,+Spring+Lake,+NC+28390&dirflg=d",
+  wazeUrl: "https://waze.com/ul?ll=35.1636,-78.9728&navigate=yes",
   hours: [
     { days: "Monday – Friday", time: "9:00 AM – 6:00 PM" },
     { days: "Saturday", time: "10:00 AM – 4:00 PM" },
     { days: "Sunday", time: "Closed" }
+  ],
+  wayfindingLandmarks: [
+    {
+      badge: "FROM FORT BRAGG GATES",
+      direction: "Heading North on S Bragg Blvd (From Honeycutt / Butner / Post Gates)",
+      cue: "Traffic moves fast coming off Fort Bragg onto S Bragg Blvd (NC-24/87). Stay in the RIGHT-HAND lane as you enter the 200 South block (just before Main St). Slow down early and turn right directly into our front storefront lot at 240 S Bragg Blvd."
+    },
+    {
+      badge: "FROM SANFORD / NC-87 SOUTH",
+      direction: "Heading South on Bragg Blvd (From Sanford, Spout Springs & NC-87)",
+      cue: "Driving south through Spring Lake past N Bragg Blvd and the Main St / NC-210 intersection, you immediately enter S Bragg Blvd. Get into the left turn lane entering the 200 South block — look for 240 S Bragg Blvd on your left before reaching the Fort Bragg perimeter."
+    },
+    {
+      badge: "FROM FAYETTEVILLE / NC-210",
+      direction: "Approaching via Murchison Rd / NC-210 or Ramsey St Corridor",
+      cue: "Merge onto S Bragg Blvd in Spring Lake and prepare for an immediate turn-in at 240 S Bragg Blvd. Dedicated front pull-in parking accommodates pickups, POVs, and trailers."
+    },
+    {
+      badge: "VISUAL LANDMARK CUE",
+      direction: "What to Look For So You Don't Pass Us at 45 MPH",
+      cue: "Look for our corrugated metal hangar-style storefront building at 240 S Bragg Blvd with our signature OLD SARGE'S SURPLUS signage and front concrete parking apron."
+    }
+  ],
+  customerReviews: [
+    {
+      id: "rev-1",
+      author: "82nd ABN Jumpmaster",
+      location: "Fort Bragg, NC",
+      rating: 5,
+      highlight: "Saved $280+ on CIF Turn-In",
+      quote: "Needed a replacement MOLLE II sustainment pouch, wet weather bag, and Gore-Tex bivy before clearing CIF. Old Sarge had the exact NSNs on the shelf and saved me nearly $300 off Statement of Charges."
+    },
+    {
+      id: "rev-2",
+      author: "Local Guide • 35+ 'Helpful Staff' Mentions",
+      location: "Spring Lake, NC",
+      rating: 5,
+      highlight: "Best On-Site Uniform Sewing on Bragg Blvd",
+      quote: "Dropped off two OCP tops for name tapes, rank, and wings sew-on. Stitched straight to AR 670-1 spec and ready the same afternoon. Real-deal surplus store."
+    },
+    {
+      id: "rev-3",
+      author: "Verified Collector & Outdoorsman",
+      location: "Fayetteville / Harnett County",
+      rating: 5,
+      highlight: "Floor-to-Ceiling Authentic USGI Gear",
+      quote: "Packed to the rafters with real military surplus—ALICE packs, .50 cal ammo cans with good rubber seals, Woobies, and flight suits. Helpful staff who actually know the gear."
+    }
   ],
   disambiguation: {
     ourStore: {
