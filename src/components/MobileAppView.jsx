@@ -10,6 +10,7 @@ import {
   Search,
   Sliders,
   Plus,
+  Minus,
   Check,
   ShoppingBag,
   ShieldAlert,
@@ -32,7 +33,9 @@ export default function MobileAppView() {
     inventoryBays,
     sewingStatus,
     featuredDrops,
+    holdList,
     addToHoldList,
+    updateHoldQty,
     holdItemCount,
     holdTotalCost,
     holdTotalSavings,
@@ -90,6 +93,11 @@ export default function MobileAppView() {
     : 'bg-yellow-400 text-black';
 
   const accentText = isDaylight ? 'text-[#B45309]' : 'text-yellow-400';
+
+  const getHoldQty = (itemId) => {
+    const found = holdList.find((i) => i.id === itemId);
+    return found ? found.qty : 0;
+  };
 
   const handleAdd = (item, bayName) => {
     addToHoldList(item, bayName);
@@ -460,25 +468,52 @@ export default function MobileAppView() {
                               </div>
                             </div>
 
-                            <button
-                              type="button"
-                              disabled={isSoldOut}
-                              onClick={() => handleAdd(item, bay.shortName)}
-                              className={`w-10 h-10 flex items-center justify-center shrink-0 transition cursor-pointer ${
-                                isSoldOut
-                                  ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
-                                  : isAdded
-                                  ? 'bg-emerald-600 text-white'
-                                  : accentBg
-                              }`}
-                              aria-label={`Add ${item.name} to 24-hour counter hold`}
-                            >
-                              {isAdded ? (
-                                <Check className="w-4 h-4" />
-                              ) : (
+                            {getHoldQty(item.id) > 0 ? (
+                              <div
+                                className={`inline-flex items-center border-2 border-emerald-400 bg-emerald-950 text-white shrink-0 transition-all ${
+                                  isAdded ? 'scale-105 ring-2 ring-yellow-400' : ''
+                                }`}
+                              >
+                                <button
+                                  type="button"
+                                  onClick={() => updateHoldQty(item.id, -1)}
+                                  className="w-7 h-9 flex items-center justify-center bg-emerald-900 hover:bg-rose-700 text-white cursor-pointer"
+                                  aria-label="Remove 1 from Pull Sheet"
+                                >
+                                  <Minus className="w-3 h-3" />
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => setIsHoldDrawerOpen(true)}
+                                  className="px-2 h-9 flex items-center justify-center font-mono text-[11px] font-black text-emerald-300 cursor-pointer"
+                                  title="Open Pull Sheet"
+                                >
+                                  {getHoldQty(item.id)}x
+                                </button>
+                                <button
+                                  type="button"
+                                  onClick={() => handleAdd(item, bay.shortName)}
+                                  className="w-7 h-9 flex items-center justify-center bg-emerald-500 text-black cursor-pointer"
+                                  aria-label="Add 1 more to Pull Sheet"
+                                >
+                                  <Plus className="w-3 h-3" />
+                                </button>
+                              </div>
+                            ) : (
+                              <button
+                                type="button"
+                                disabled={isSoldOut}
+                                onClick={() => handleAdd(item, bay.shortName)}
+                                className={`w-10 h-10 flex items-center justify-center shrink-0 transition-all active:scale-90 cursor-pointer ${
+                                  isSoldOut
+                                    ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                                    : accentBg
+                                }`}
+                                aria-label={`Add ${item.name} to 24-hour counter hold`}
+                              >
                                 <Plus className="w-4 h-4" />
-                              )}
-                            </button>
+                              </button>
+                            )}
                           </div>
                         );
                       })}
