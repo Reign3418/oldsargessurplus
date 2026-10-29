@@ -10,6 +10,7 @@ const HoldPullSheetDrawer = lazy(() => import('./components/HoldPullSheetDrawer'
 const DisambiguationModal = lazy(() => import('./components/DisambiguationModal'));
 const CifCalculatorModal = lazy(() => import('./components/CifCalculatorModal'));
 const SewingAlterationsModal = lazy(() => import('./components/SewingAlterationsModal'));
+const EbaySyncModal = lazy(() => import('./components/EbaySyncModal'));
 const OwnerAdminModal = lazy(() => import('./components/OwnerAdminModal'));
 const CounterTvModal = lazy(() => import('./components/CounterTvModal'));
 const StoreTwinSimulatorModal = lazy(() => import('./components/StoreTwinSimulatorModal'));
@@ -78,6 +79,7 @@ function AppContent({ onLockSite }) {
         <DisambiguationModal />
         <CifCalculatorModal />
         <SewingAlterationsModal />
+        <EbaySyncModal />
         <OwnerAdminModal />
         <CounterTvModal />
         <StoreTwinSimulatorModal />

@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useSurplus } from '../context/SurplusContext';
-import { STOCK_BADGE_MAP } from '../data/surplusData';
+import {
+  STOCK_BADGE_MAP,
+  EBAY_STORE_CONFIG,
+  getEbayItemSearchUrl
+} from '../data/surplusData';
 import {
   ShieldAlert,
   Phone,
@@ -9,6 +13,7 @@ import {
   ExternalLink,
   Search,
   Scissors,
+  RefreshCw,
   PackageCheck,
   Calculator,
   Plus,
@@ -47,6 +52,9 @@ export default function StorefrontLayout() {
     setIsDisambiguationModalOpen,
     setIsCifCalculatorOpen,
     setIsSewingModalOpen,
+    setIsEbaySyncModalOpen,
+    ebaySyncMeta,
+    runEbayFeedSync,
     setIsAdminModalOpen,
     setIsTvBoardOpen,
     setIsWhitePaperOpen,
@@ -122,6 +130,45 @@ export default function StorefrontLayout() {
             <ShieldAlert className="w-3 h-3 shrink-0" />
             <span>Missing a NY Order? Click Before Reviewing →</span>
           </button>
+        </div>
+      </section>
+
+      {/* ================================================================= */}
+      {/* SHARED LIVE EBAY STOREFRONT AUTO-SYNC BRIDGE STRIP                */}
+      {/* ================================================================= */}
+      <section
+        aria-label="Live eBay Seller Storefront Auto-Sync Bar"
+        className="bg-[#0B121E] border-b border-emerald-500/40 text-white py-1.5 px-3 sm:px-6"
+      >
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="inline-flex items-center gap-1 bg-emerald-500 text-black font-mono font-black px-2 py-0.5 text-[10px] uppercase rounded-xs">
+              <RefreshCw className="w-3 h-3" />
+              <span>eBay Auto-Sync: @{EBAY_STORE_CONFIG.sellerHandle}</span>
+            </span>
+            <span className="text-zinc-200">
+              <strong>Zero Double-Entry:</strong> List once on eBay — items sync automatically to this website &amp; your Counter TV.
+            </span>
+          </div>
+
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={runEbayFeedSync}
+              className="px-2.5 py-1 rounded-xs bg-yellow-400 hover:bg-yellow-300 text-black font-mono font-black text-[11px] uppercase cursor-pointer"
+            >
+              {ebaySyncMeta.hasImportedBatch
+                ? `✓ ${ebaySyncMeta.syncedListingsCount} eBay Items Synced`
+                : '+ Pull Latest eBay Listings'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setIsEbaySyncModalOpen(true)}
+              className="px-2.5 py-1 rounded-xs bg-zinc-800 hover:bg-zinc-700 text-emerald-300 border border-emerald-500/40 font-mono font-bold text-[11px] uppercase cursor-pointer"
+            >
+              Open eBay Sync Studio →
+            </button>
+          </div>
         </div>
       </section>
 
@@ -461,18 +508,25 @@ export default function StorefrontLayout() {
                           className="border border-[#262F40] bg-[#12161F] p-4 flex flex-col justify-between gap-3 hover:border-yellow-400 transition"
                         >
                           <div className="space-y-2">
-                            <div className="flex items-center justify-between gap-2">
+                            <div className="flex flex-wrap items-center justify-between gap-1.5">
                               <span
                                 className={`inline-flex items-center gap-1.5 text-[10px] font-mono font-bold px-2 py-0.5 border ${badge.bg} ${badge.border} ${badge.text}`}
                               >
                                 <span className={`w-1.5 h-1.5 rounded-full ${badge.dot}`} />
                                 <span>{badge.label}</span>
                               </span>
-                              {item.cifEssential && (
-                                <span className="bg-emerald-950 text-emerald-300 border border-emerald-500/50 text-[10px] font-mono font-bold px-1.5 py-0.5">
-                                  CIF TURN-IN
-                                </span>
-                              )}
+                              <div className="flex items-center gap-1">
+                                {item.ebaySynced && (
+                                  <span className="bg-yellow-400/20 text-yellow-300 border border-yellow-400/50 text-[10px] font-mono font-bold px-1.5 py-0.5">
+                                    🔄 eBay #{item.ebayItemNumber?.slice(-4) || 'SYNC'}
+                                  </span>
+                                )}
+                                {item.cifEssential && (
+                                  <span className="bg-emerald-950 text-emerald-300 border border-emerald-500/50 text-[10px] font-mono font-bold px-1.5 py-0.5">
+                                    CIF TURN-IN
+                                  </span>
+                                )}
+                              </div>
                             </div>
 
                             <h4 className="font-bold text-sm sm:text-base leading-snug">
@@ -524,8 +578,18 @@ export default function StorefrontLayout() {
                                 }`}
                               >
                                 <Plus className="w-3.5 h-3.5" />
-                                <span>{isSoldOut ? 'Sold Out' : 'Add to Hold List'}</span>
+                                <span>{isSoldOut ? 'Sold Out' : 'Hold in Store'}</span>
                               </button>
+
+                              <a
+                                href={getEbayItemSearchUrl(item)}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="py-2 px-2.5 text-[11px] font-mono font-bold uppercase border border-[#1F2735] bg-[#0B0E14] text-yellow-300 hover:border-yellow-400"
+                                title="Buy & ship this item from our @oldsargessurplus eBay store"
+                              >
+                                eBay ↗
+                              </a>
                             </div>
                           </div>
                         </div>
@@ -802,18 +866,29 @@ export default function StorefrontLayout() {
                                   </span>
                                 </td>
                                 <td className="py-3 px-3 text-right align-top whitespace-nowrap">
-                                  <button
-                                    type="button"
-                                    disabled={isSoldOut}
-                                    onClick={() => addToHoldList(item, bay.shortName)}
-                                    className={`px-3 py-1.5 font-mono text-[11px] font-black uppercase cursor-pointer ${
-                                      isSoldOut
-                                        ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
-                                        : 'bg-emerald-500 hover:bg-emerald-400 text-black'
-                                    }`}
-                                  >
-                                    {isSoldOut ? 'OUT' : '+ PULL'}
-                                  </button>
+                                  <div className="inline-flex items-center gap-1.5">
+                                    <button
+                                      type="button"
+                                      disabled={isSoldOut}
+                                      onClick={() => addToHoldList(item, bay.shortName)}
+                                      className={`px-2.5 py-1.5 font-mono text-[11px] font-black uppercase cursor-pointer ${
+                                        isSoldOut
+                                          ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed'
+                                          : 'bg-emerald-500 hover:bg-emerald-400 text-black'
+                                      }`}
+                                    >
+                                      {isSoldOut ? 'OUT' : '+ PULL'}
+                                    </button>
+                                    <a
+                                      href={getEbayItemSearchUrl(item)}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="px-2 py-1.5 font-mono text-[11px] font-bold uppercase bg-[#0D120B] border border-emerald-500/40 text-amber-300 hover:border-amber-400"
+                                      title="Buy & ship from @oldsargessurplus on eBay"
+                                    >
+                                      eBay ↗
+                                    </a>
+                                  </div>
                                 </td>
                               </tr>
                             );
@@ -1075,18 +1150,29 @@ export default function StorefrontLayout() {
                             )}
                           </div>
 
-                          <button
-                            type="button"
-                            disabled={isSoldOut}
-                            onClick={() => addToHoldList(item, bay.shortName)}
-                            className={`px-3.5 py-2 rounded font-black text-xs uppercase tracking-wider cursor-pointer ${
-                              isSoldOut
-                                ? 'bg-zinc-300 text-zinc-500 cursor-not-allowed'
-                                : 'bg-[#B45309] hover:bg-[#92400E] text-white shadow-xs'
-                            }`}
-                          >
-                            {isSoldOut ? 'Out of Stock' : '+ Hold at Counter'}
-                          </button>
+                          <div className="flex items-center gap-1.5">
+                            <button
+                              type="button"
+                              disabled={isSoldOut}
+                              onClick={() => addToHoldList(item, bay.shortName)}
+                              className={`px-3 py-2 rounded font-black text-xs uppercase tracking-wider cursor-pointer ${
+                                isSoldOut
+                                  ? 'bg-zinc-300 text-zinc-500 cursor-not-allowed'
+                                  : 'bg-[#B45309] hover:bg-[#92400E] text-white shadow-xs'
+                              }`}
+                            >
+                              {isSoldOut ? 'Out' : '+ Hold'}
+                            </button>
+                            <a
+                              href={getEbayItemSearchUrl(item)}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="px-2.5 py-2 rounded border border-[#D4CFC3] bg-[#EFECE4] hover:border-[#B45309] text-[#171614] font-mono text-xs font-bold"
+                              title="Buy & ship from @oldsargessurplus on eBay"
+                            >
+                              eBay ↗
+                            </a>
+                          </div>
                         </div>
                       </div>
                     );

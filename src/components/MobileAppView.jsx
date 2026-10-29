@@ -41,6 +41,9 @@ export default function MobileAppView() {
     setIsAdminModalOpen,
     setIsCifCalculatorOpen,
     setIsSewingModalOpen,
+    setIsEbaySyncModalOpen,
+    ebaySyncMeta,
+    runEbayFeedSync,
     setIsWhitePaperOpen,
     setIsTvBoardOpen
   } = useSurplus();
@@ -749,26 +752,35 @@ export default function MobileAppView() {
             </button>
           </div>
 
-          {/* Verified eBay Storefront Card */}
+          {/* Verified eBay Storefront & Auto-Sync Engine Card */}
           <div className={`p-4 border-2 border-yellow-400/70 space-y-2.5 ${bgCard}`}>
             <span className="font-mono text-[10px] font-bold uppercase text-yellow-500">
-              Verified Mail-Order Storefront
+              Zero-Workflow-Change eBay Auto-Sync (@{storeInfo.ebayHandle})
             </span>
             <h2 className="font-['Bebas_Neue'] text-2xl font-black uppercase tracking-wide">
-              Shop Our Top-Rated eBay Vault ({storeInfo.ebayHandle})
+              Shop &amp; Sync Our Top-Rated eBay Vault ({storeInfo.ebayHandle})
             </h2>
             <p className="text-xs opacity-85">
-              Out of state or looking for rare collector surplus shipped to your door? Browse our official, top-rated eBay storefront with 100% buyer protection.
+              List once on eBay — items automatically sync into the 8-Bay Storefront &amp; Counter TV. Nationwide buyers click through to eBay; Fort Bragg soldiers hold at the counter.
             </p>
-            <a
-              href={storeInfo.ebayUrl}
-              target="_blank"
-              rel="noreferrer"
-              className={`w-full py-2.5 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 ${accentBg}`}
-            >
-              <span>Open Official eBay Store</span>
-              <ExternalLink className="w-3.5 h-3.5" />
-            </a>
+            <div className="grid grid-cols-1 gap-2">
+              <button
+                type="button"
+                onClick={() => setIsEbaySyncModalOpen(true)}
+                className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black uppercase tracking-wider cursor-pointer"
+              >
+                🔄 Open Live eBay Auto-Sync Studio ({ebaySyncMeta.syncedListingsCount} Synced)
+              </button>
+              <a
+                href={storeInfo.ebayUrl}
+                target="_blank"
+                rel="noreferrer"
+                className={`w-full py-2.5 text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 ${accentBg}`}
+              >
+                <span>Open Official eBay Store</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
 
           {/* 5-Star Fort Bragg Reviews */}

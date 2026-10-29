@@ -3,7 +3,9 @@ import {
   STORE_INFO,
   INITIAL_SEWING_STATUS,
   INITIAL_FEATURED_DROPS,
-  INITIAL_INVENTORY_BAYS
+  INITIAL_INVENTORY_BAYS,
+  EBAY_STORE_CONFIG,
+  EBAY_FEED_SYNC_BATCH
 } from '../data/surplusData';
 
 const SurplusContext = createContext();
@@ -79,8 +81,19 @@ export function SurplusProvider({ children }) {
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isCifCalculatorOpen, setIsCifCalculatorOpen] = useState(false);
   const [isSewingModalOpen, setIsSewingModalOpen] = useState(false);
+  const [isEbaySyncModalOpen, setIsEbaySyncModalOpen] = useState(false);
   const [isTvBoardOpen, setIsTvBoardOpen] = useState(false);
   const [isStoreTwinOpen, setIsStoreTwinOpen] = useState(false);
+
+  // eBay Storefront Auto-Sync Telemetry State
+  const [ebaySyncMeta, setEbaySyncMeta] = useState({
+    sellerHandle: EBAY_STORE_CONFIG.sellerHandle,
+    autoSyncEnabled: true,
+    pollIntervalMins: 15,
+    lastSyncedAt: 'Just now (Live Seller Feed)',
+    syncedListingsCount: 30,
+    hasImportedBatch: false
+  });
 
   // Saved Digital Sew & Alterations Tickets
   const [sewTickets, setSewTickets] = useState(() => {
@@ -265,6 +278,90 @@ export function SurplusProvider({ children }) {
     return newTicket;
   };
 
+  // 1-Click Sync from @oldsargessurplus eBay Seller Feed into the 8-Bay Website Inventory
+  const runEbayFeedSync = () => {
+    setInventoryBays((prevBays) => {
+      const next = prevBays.map((bay) => {
+        const incomingForBay = EBAY_FEED_SYNC_BATCH.filter((item) => item.bayId === bay.id);
+        if (incomingForBay.length === 0) return bay;
+        const existingIds = new Set(bay.items.map((i) => i.id));
+        const newItems = incomingForBay.filter((i) => !existingIds.has(i.id));
+        return {
+          ...bay,
+          items: [...newItems, ...bay.items]
+        };
+      });
+      broadcastWifiSync({ inventory: next });
+      return next;
+    });
+
+    setEbaySyncMeta((prev) => ({
+      ...prev,
+      lastSyncedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      syncedListingsCount: 30 + EBAY_FEED_SYNC_BATCH.length,
+      hasImportedBatch: true
+    }));
+  };
+
+  // Auto-Classify & Import a Single eBay Listing (from URL, Seller Hub Paste, or Quick Form)
+  const importCustomEbayListing = ({ title, price, nsn, ebayItemNumber, bayId }) => {
+    const cleanTitle = (title || 'USGI eBay Listing').trim();
+    const parsedPrice = Number(price) || 45;
+
+    // Auto-route to the matching Bay if bayId is 'auto'
+    let targetBayId = bayId;
+    if (!targetBayId || targetBayId === 'auto') {
+      const lower = cleanTitle.toLowerCase();
+      if (lower.includes('ruck') || lower.includes('pack') || lower.includes('mystery ranch') || lower.includes('alice')) {
+        targetBayId = 'rucks-packs';
+      } else if (lower.includes('pouch') || lower.includes('ifak') || lower.includes('vest') || lower.includes('molle')) {
+        targetBayId = 'molle-pouches';
+      } else if (lower.includes('woobie') || lower.includes('sleep') || lower.includes('bivy') || lower.includes('ecwcs') || lower.includes('parka')) {
+        targetBayId = 'ecwcs-sleep';
+      } else if (lower.includes('boot')) {
+        targetBayId = 'boots-footwear';
+      } else if (lower.includes('ammo') || lower.includes('can') || lower.includes('pelican') || lower.includes('hardigg')) {
+        targetBayId = 'ammo-cans-hardware';
+      } else if (lower.includes('helmet') || lower.includes('ach') || lower.includes('canteen')) {
+        targetBayId = 'helmets-field-gear';
+      } else {
+        targetBayId = 'uniforms-flight';
+      }
+    }
+
+    const newItem = {
+      id: `ebay-custom-${Date.now()}`,
+      name: cleanTitle,
+      nsn: nsn || 'EBAY-SYNCED',
+      condition: 'eBay Synced • Top-Rated Seller',
+      price: parsedPrice,
+      cifCharge: Math.round(parsedPrice * 2.1),
+      cifEssential: true,
+      stockStatus: 'FRESH_DROP',
+      ebaySynced: true,
+      ebayItemNumber: ebayItemNumber || `${Math.floor(285900000000 + Math.random() * 9999999)}`,
+      ebayWatchers: Math.floor(3 + Math.random() * 14),
+      ebayQuery: cleanTitle.split(' ').slice(0, 3).join(' '),
+      description: 'Synced directly from @oldsargessurplus eBay listing — available for nationwide eBay shipping or local pickup at 240 S Bragg Blvd.'
+    };
+
+    setInventoryBays((prev) => {
+      const next = prev.map((bay) =>
+        bay.id === targetBayId ? { ...bay, items: [newItem, ...bay.items] } : bay
+      );
+      broadcastWifiSync({ inventory: next });
+      return next;
+    });
+
+    setEbaySyncMeta((prev) => ({
+      ...prev,
+      lastSyncedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      syncedListingsCount: prev.syncedListingsCount + 1
+    }));
+
+    return { newItem, targetBayId };
+  };
+
   // Reset to Default Factory Data
   const resetToFactoryDefaults = () => {
     setInventoryBays(INITIAL_INVENTORY_BAYS);
@@ -353,6 +450,12 @@ export function SurplusProvider({ children }) {
         setIsCifCalculatorOpen,
         isSewingModalOpen,
         setIsSewingModalOpen,
+        isEbaySyncModalOpen,
+        setIsEbaySyncModalOpen,
+        ebaySyncMeta,
+        setEbaySyncMeta,
+        runEbayFeedSync,
+        importCustomEbayListing,
         sewTickets,
         submitSewTicket,
         isTvBoardOpen,

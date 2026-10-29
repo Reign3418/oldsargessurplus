@@ -6,6 +6,7 @@ import {
   FileText,
   Calculator,
   Scissors,
+  RefreshCw,
   Sliders,
   Tv,
   Smartphone,
@@ -22,6 +23,7 @@ export default function DesignSwitcherBar({ onLockSite }) {
     setIsDisambiguationModalOpen,
     setIsCifCalculatorOpen,
     setIsSewingModalOpen,
+    setIsEbaySyncModalOpen,
     setIsAdminModalOpen,
     setIsTvBoardOpen,
     setIsStoreTwinOpen
@@ -203,6 +205,16 @@ export default function DesignSwitcherBar({ onLockSite }) {
 
           {/* Compact Counter & Owner Group */}
           <div className="flex items-center bg-[#0F131A] border border-zinc-700/80 rounded p-0.5 gap-0.5">
+            <button
+              type="button"
+              onClick={() => setIsEbaySyncModalOpen(true)}
+              className="flex items-center gap-1 px-2 py-0.5 rounded-xs text-[11px] font-black transition cursor-pointer bg-emerald-500 hover:bg-emerald-400 text-black"
+              title="Zero-Workflow-Change eBay Storefront Auto-Sync (@oldsargessurplus)"
+            >
+              <RefreshCw className="w-3 h-3 shrink-0" />
+              <span>eBay Sync</span>
+            </button>
+
             <button
               type="button"
               onClick={() => setIsAdminModalOpen(true)}
