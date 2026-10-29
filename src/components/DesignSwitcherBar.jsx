@@ -5,6 +5,7 @@ import {
   ShieldAlert,
   FileText,
   Calculator,
+  Scissors,
   Sliders,
   Tv,
   Smartphone,
@@ -23,6 +24,7 @@ export default function DesignSwitcherBar({ onLockSite }) {
     setIsWhitePaperOpen,
     setIsDisambiguationModalOpen,
     setIsCifCalculatorOpen,
+    setIsSewingModalOpen,
     setIsAdminModalOpen,
     setIsTvBoardOpen,
     setIsStoreTwinOpen
@@ -93,6 +95,15 @@ export default function DesignSwitcherBar({ onLockSite }) {
             title="CIF Turn-In & Packing List Calculator"
           >
             <span>🎒 CIF</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsSewingModalOpen(true)}
+            className="p-1 px-1.5 rounded-none bg-amber-500 text-black font-black text-[11px] flex items-center gap-0.5 cursor-pointer"
+            title="Interactive Name Tape, OCP Uniform & Ruck Repair Sew Studio"
+          >
+            <span>🧵 Sew</span>
           </button>
 
           <button
@@ -191,6 +202,16 @@ export default function DesignSwitcherBar({ onLockSite }) {
           >
             <Calculator className="w-3.5 h-3.5 shrink-0" />
             <span className="whitespace-nowrap">🎒 CIF Calculator</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setIsSewingModalOpen(true)}
+            className="flex items-center gap-1 px-2.5 py-1 rounded-none text-xs font-black transition cursor-pointer bg-amber-500 hover:bg-amber-400 text-black border border-amber-300 shadow-sm"
+            title="Interactive AR 670-1 Name Tape, OCP Uniform & Heavy Ruck Repair Studio"
+          >
+            <Scissors className="w-3.5 h-3.5 shrink-0" />
+            <span className="whitespace-nowrap">🧵 Sew &amp; Tapes</span>
           </button>
 
           <button

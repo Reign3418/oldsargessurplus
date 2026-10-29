@@ -78,8 +78,19 @@ export function SurplusProvider({ children }) {
   const [isDisambiguationModalOpen, setIsDisambiguationModalOpen] = useState(false);
   const [isAdminModalOpen, setIsAdminModalOpen] = useState(false);
   const [isCifCalculatorOpen, setIsCifCalculatorOpen] = useState(false);
+  const [isSewingModalOpen, setIsSewingModalOpen] = useState(false);
   const [isTvBoardOpen, setIsTvBoardOpen] = useState(false);
   const [isStoreTwinOpen, setIsStoreTwinOpen] = useState(false);
+
+  // Saved Digital Sew & Alterations Tickets
+  const [sewTickets, setSewTickets] = useState(() => {
+    try {
+      const saved = localStorage.getItem('oldsarge_sew_tickets_v1');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
   // Search & Filter State
   const [searchQuery, setSearchQuery] = useState('');
@@ -110,6 +121,14 @@ export function SurplusProvider({ children }) {
       // ignore
     }
   }, [featuredDrops]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('oldsarge_sew_tickets_v1', JSON.stringify(sewTickets));
+    } catch {
+      // ignore
+    }
+  }, [sewTickets]);
 
   // Broadcast to local Wi-Fi Counter-to-TV relay when running locally
   const broadcastWifiSync = async (patch) => {
@@ -208,11 +227,42 @@ export function SurplusProvider({ children }) {
         label: '🧵 HEAVY RUCK & ZIPPER REPAIR + UNIFORM SEWING OPEN',
         subtext: 'Industrial walking-foot sewing machines running today for blown ruck zippers, straps & full OCP setups',
         cutoffTime: 'Walk-ins welcome 9:00 AM – 6:00 PM'
+      },
+      PARTNER_DROP: {
+        turnaroundMode: 'PARTNER_DROP',
+        label: '🤝 BRAGG BLVD PARTNER SEW & ALTERATIONS DROP-OFF HUB',
+        subtext: 'Configure your Name Tapes, OCP Sew-Down, or Ruck Repair ticket online — drop off at 240 S Bragg Blvd',
+        cutoffTime: '24-Hour Partner Stitch Turnaround'
       }
     };
     const next = presets[mode] || presets.SAME_DAY;
     setSewingStatus(next);
     broadcastWifiSync({ sewingStatus: next });
+  };
+
+  // Create & Log a Digital Sew / Alterations Ticket + Add to Customer Pull Sheet
+  const submitSewTicket = (ticketData) => {
+    const newTicket = {
+      ...ticketData,
+      ticketId: ticketData.ticketId || `SEW-${Math.floor(1000 + Math.random() * 9000)}`,
+      createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setSewTickets((prev) => [newTicket, ...prev]);
+
+    // Also add as an itemized entry into the Customer Hold / Pull Sheet
+    addToHoldList(
+      {
+        id: `sew-ticket-${newTicket.ticketId}`,
+        name: `[${newTicket.ticketId}] ${newTicket.summaryTitle}`,
+        nsn: `TAPE: "${newTicket.lastName}" • ${newTicket.rank}`,
+        condition: newTicket.turnaroundLabel,
+        price: newTicket.totalPrice,
+        cifCharge: Math.round(newTicket.totalPrice * 1.65)
+      },
+      'On-Site Sewing & Alterations'
+    );
+
+    return newTicket;
   };
 
   // Reset to Default Factory Data
@@ -301,6 +351,10 @@ export function SurplusProvider({ children }) {
         setIsAdminModalOpen,
         isCifCalculatorOpen,
         setIsCifCalculatorOpen,
+        isSewingModalOpen,
+        setIsSewingModalOpen,
+        sewTickets,
+        submitSewTicket,
         isTvBoardOpen,
         setIsTvBoardOpen,
         isStoreTwinOpen,

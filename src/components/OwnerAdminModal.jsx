@@ -13,8 +13,10 @@ export default function OwnerAdminModal() {
   const {
     isAdminModalOpen,
     setIsAdminModalOpen,
+    setIsSewingModalOpen,
     inventoryBays,
     sewingStatus,
+    sewTickets,
     updateItemStockStatus,
     updateItemPrice,
     addNewInventoryItem,
@@ -100,23 +102,36 @@ export default function OwnerAdminModal() {
 
         {/* Body */}
         <div className="p-4 sm:p-6 space-y-6 max-h-[80vh] overflow-y-auto">
-          {/* 1. On-Site Sewing Turnaround 1-Tap Switch */}
+          {/* 1. On-Site Sewing Turnaround & Operating Mode 1-Tap Switch */}
           <div className="bg-[#141A24] border border-zinc-700 p-4 space-y-3">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-2">
               <span className="inline-flex items-center gap-1.5 font-mono text-xs font-black uppercase text-yellow-400">
                 <Scissors className="w-4 h-4" />
-                <span>1-Tap Sewing Room Turnaround Status</span>
+                <span>1-Tap Sewing &amp; Alterations Operating Mode</span>
               </span>
-              <span className="text-[11px] font-mono text-emerald-400">
-                Active: {sewingStatus.turnaroundMode}
-              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-mono text-emerald-400">
+                  Active: {sewingStatus.turnaroundMode}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAdminModalOpen(false);
+                    setIsSewingModalOpen(true);
+                  }}
+                  className="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-black font-mono text-[11px] font-black uppercase cursor-pointer"
+                >
+                  Open Sew &amp; Name Tape Studio →
+                </button>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
               {[
                 { id: 'SAME_DAY', label: '⚡ Walk-In / Same-Day Open' },
                 { id: 'NEXT_DAY', label: '🕐 24-Hr Drop-Off Mode' },
-                { id: 'RUCK_REPAIR', label: '🧵 Heavy Ruck & Zipper Mode' }
+                { id: 'RUCK_REPAIR', label: '🧵 Heavy Ruck & Zipper Mode' },
+                { id: 'PARTNER_DROP', label: '🤝 Partner Sew Drop-Off Hub' }
               ].map((mode) => (
                 <button
                   key={mode.id}
@@ -132,6 +147,33 @@ export default function OwnerAdminModal() {
                 </button>
               ))}
             </div>
+
+            {sewTickets && sewTickets.length > 0 && (
+              <div className="pt-2 border-t border-zinc-800 space-y-1.5">
+                <div className="text-[11px] font-mono uppercase text-amber-300 font-bold">
+                  Recent Counter Sew &amp; Name Tape Tickets ({sewTickets.length}):
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {sewTickets.slice(0, 4).map((t) => (
+                    <div
+                      key={t.ticketId}
+                      className="p-2 bg-[#0B0F17] border border-amber-500/40 text-xs flex items-center justify-between gap-2"
+                    >
+                      <div>
+                        <span className="font-mono font-black text-amber-400">
+                          {t.ticketId}
+                        </span>{' '}
+                        • <strong className="font-mono">{t.lastName}</strong> ({t.rank})
+                        <div className="text-[10px] text-zinc-400">{t.summaryTitle}</div>
+                      </div>
+                      <span className="font-mono font-black text-emerald-400">
+                        ${t.totalPrice}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* 2. Bay Selector & 1-Tap Item Stock Toggles */}

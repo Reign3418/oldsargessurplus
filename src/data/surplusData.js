@@ -661,3 +661,202 @@ export const STOCK_BADGE_MAP = {
     dot: "bg-rose-400"
   }
 };
+
+export const SEWING_STUDIO_CATALOG = {
+  ranks: [
+    "PV2", "PFC", "SPC", "CPL", "SGT", "SSG", "SFC", "MSG", "1SG", "SGM", "CSM",
+    "WO1", "CW2", "CW3", "CW4", "CW5",
+    "2LT", "1LT", "CPT", "MAJ", "LTC", "COL"
+  ],
+  skillBadges: [
+    { id: "airborne", name: "Basic Parachutist (Airborne)", short: "AIRBORNE WINGS", price: 4 },
+    { id: "sr-airborne", name: "Senior Parachutist", short: "SR PARACHUTIST", price: 4 },
+    { id: "jm-airborne", name: "Master Parachutist (Jumpmaster)", short: "MASTER WINGS", price: 4 },
+    { id: "air-assault", name: "Air Assault Badge", short: "AIR ASSAULT", price: 4 },
+    { id: "pathfinder", name: "Pathfinder Torch Badge", short: "PATHFINDER", price: 4 },
+    { id: "cib", name: "Combat Infantryman Badge (CIB)", short: "CIB", price: 4 },
+    { id: "eib", name: "Expert Infantryman Badge (EIB)", short: "EIB", price: 4 },
+    { id: "cmb", name: "Combat Medical Badge (CMB)", short: "CMB", price: 4 },
+    { id: "efmb", name: "Expert Field Medical Badge (EFMB)", short: "EFMB", price: 4 },
+    { id: "esb", name: "Expert Soldier Badge (ESB)", short: "ESB", price: 4 },
+    { id: "cab", name: "Combat Action Badge (CAB)", short: "CAB", price: 4 },
+    { id: "rigger", name: "Parachute Rigger Badge", short: "RIGGER", price: 4 }
+  ],
+  tapePatterns: [
+    {
+      id: "ocp-scorpion",
+      name: "OCP Scorpion W2 (AR 670-1 Standard)",
+      bgClass: "bg-gradient-to-r from-[#5b5d44] via-[#7c7455] to-[#464935]",
+      textClass: "text-[#141413]",
+      borderClass: "border-[#3c3f2d]"
+    },
+    {
+      id: "coyote-brown",
+      name: "Coyote Brown 499 (Rucks / Bags / Helmets)",
+      bgClass: "bg-[#81613e]",
+      textClass: "text-[#121212]",
+      borderClass: "border-[#5d4429]"
+    },
+    {
+      id: "od-vintage",
+      name: "Olive Drab 107 (ALICE / Vintage Field Gear)",
+      bgClass: "bg-[#4a5335]",
+      textClass: "text-[#0f110c]",
+      borderClass: "border-[#313822]"
+    },
+    {
+      id: "subdued-black",
+      name: "Tactical Black w/ Gold or OD Thread",
+      bgClass: "bg-[#18191c]",
+      textClass: "text-[#d4af37]",
+      borderClass: "border-zinc-700"
+    }
+  ],
+  categories: [
+    {
+      id: "ocp-tapes",
+      title: "OCP Uniform & Name Tapes",
+      badge: "AR 670-1 DIRECT SEW",
+      description: "Strip hook-and-loop velcro and sew down Name, U.S. Army, Rank, and Skill Badges with exact 1/4-inch regulation spacing.",
+      services: [
+        {
+          id: "svc-ocp-full",
+          name: "Full OCP Coat Strip-Velcro & Sew-Down Package",
+          detail: "Includes stripping chest velcro + sewing Name Tape, U.S. Army, Center Rank & up to 2 Skill Badges",
+          price: 22,
+          turnaround: "Same-Day / 24-Hr",
+          popular: true
+        },
+        {
+          id: "svc-ocp-basic",
+          name: "Basic OCP Coat Sew-Down (Name, U.S. Army & Rank)",
+          detail: "Clean perimeter stitch on both chest tapes and center rank (no skill badges)",
+          price: 14,
+          turnaround: "Same-Day / 24-Hr",
+          popular: true
+        },
+        {
+          id: "svc-nametape-pair",
+          name: "Custom Embroidered Name Tape Pair (2x Tapes)",
+          detail: "Made on-site in regulation block stencil — choose Plain Sew-On or Hook Velcro Backed",
+          price: 10,
+          turnaround: "While-You-Wait / 15 Mins",
+          popular: true
+        },
+        {
+          id: "svc-nametape-6pack",
+          name: "Deployment / Field Name Tape Bundle (6x Name + 2x U.S. Army)",
+          detail: "Complete uniform + ruck + patrol cap tape pack in OCP Scorpion W2",
+          price: 26,
+          turnaround: "Same-Day",
+          popular: false
+        },
+        {
+          id: "svc-parka-tab",
+          name: "ECWCS Gore-Tex Parka / Fleece Chest Rank & Name Setup",
+          detail: "Velcro or sew-on chest rank slip + name tape for cold/wet weather tops",
+          price: 12,
+          turnaround: "Same-Day",
+          popular: false
+        }
+      ]
+    },
+    {
+      id: "headgear-beret",
+      title: "Patrol Caps, Boonies & Berets",
+      badge: "AIRBORNE / RANGER / SF",
+      description: "Centered Patrol Cap rank & name tapes, luminous cat-eye strips, and Maroon/Tan/Green Beret flash & DUI crest preparation.",
+      services: [
+        {
+          id: "svc-pc-combo",
+          name: "Patrol Cap (PC) Name Tape + Front Sew-On Rank",
+          detail: "Centered rear name tape + front subdued rank stitched cleanly through stiffener",
+          price: 8,
+          turnaround: "While-You-Wait / Same-Day",
+          popular: true
+        },
+        {
+          id: "svc-pc-cateyes",
+          name: "Patrol Cap / Sun Boonie Name Tape + Luminous Cat-Eyes",
+          detail: "Rear name tape plus regulation glow-in-the-dark cat-eye strips for airborne/field ops",
+          price: 12,
+          turnaround: "Same-Day",
+          popular: true
+        },
+        {
+          id: "svc-beret-flash",
+          name: "Beret Flash Sew-On + Cardboard Backing Cut & Liner Trim",
+          detail: "Precision stitch for Airborne Maroon, Ranger Tan, SF Green, or Standard Black berets",
+          price: 16,
+          turnaround: "Same-Day / 24-Hr",
+          popular: true
+        }
+      ]
+    },
+    {
+      id: "agsu-dress",
+      title: "AGSU ('Pinks & Greens') & ASU Dress",
+      badge: "INSPECTION / BOARD READY",
+      description: "Promotion board, change-of-command, and Ball prep for Army Green Service Uniform (AGSU) and Blue ASU.",
+      services: [
+        {
+          id: "svc-agsu-patches",
+          name: "AGSU Coat Unit Patch (Left Sleeve) & Combat Patch (Right Sleeve)",
+          detail: "Exact 1/2-inch shoulder seam regulation placement on Heritage Green wool coat",
+          price: 14,
+          turnaround: "24-Hr Turnaround",
+          popular: true
+        },
+        {
+          id: "svc-agsu-chevrons",
+          name: "AGSU Sew-On Sleeve Rank Chevrons + Service Stripes / Overseas Bars",
+          detail: "Both sleeves pressed and stitched to DA PAM 670-1 board inspection standards",
+          price: 22,
+          turnaround: "24-Hr Turnaround",
+          popular: true
+        },
+        {
+          id: "svc-agsu-hem",
+          name: "AGSU / ASU Dress Trouser Hemming & Coat Waist Taper",
+          detail: "Regulation front break on low-quarters with clean blind-stitch hem",
+          price: 28,
+          turnaround: "24–48 Hr Turnaround",
+          popular: false
+        }
+      ]
+    },
+    {
+      id: "ruck-cordura",
+      title: "Heavy Ruck, Zipper & Cordura Repair",
+      badge: "INDUSTRIAL WALKING-FOOT",
+      description: "Save $200–$400 at Fort Bragg CIF by repairing blown #10 rucksack zippers, torn shoulder webbing, and plate carrier velcro.",
+      services: [
+        {
+          id: "svc-ruck-zipper",
+          name: "MOLLE II Large / Medium Ruck Heavy #10 Zipper Replacement",
+          detail: "Replaces jammed or blown main clam-shell or sustainment pouch zipper with mil-spec #10 coil",
+          price: 28,
+          turnaround: "24-Hr Turnaround",
+          popular: true
+        },
+        {
+          id: "svc-ruck-strap",
+          name: "Blown Ruck Shoulder Strap, Kidney Pad & Frame Webbing Bartack",
+          detail: "Heavy nylon bonded thread stitched through multi-layer 1000D Cordura",
+          price: 20,
+          turnaround: "Same-Day / 24-Hr",
+          popular: true
+        },
+        {
+          id: "svc-iotv-velcro",
+          name: "Plate Carrier / IOTV Cummerbund Hook & Loop Velcro Renewal",
+          detail: "Replaces worn-out fuzz velcro so flaps hold tight under field load",
+          price: 24,
+          turnaround: "24-Hr Turnaround",
+          popular: false
+        }
+      ]
+    }
+  ]
+};
+

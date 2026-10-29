@@ -39,6 +39,7 @@ export default function StorefrontLayout() {
     setIsHoldDrawerOpen,
     setIsDisambiguationModalOpen,
     setIsCifCalculatorOpen,
+    setIsSewingModalOpen,
     setIsAdminModalOpen,
     setIsTvBoardOpen,
     setIsWhitePaperOpen,
@@ -644,44 +645,79 @@ export default function StorefrontLayout() {
       {/* 5. ON-SITE UNIFORM SEWING & RUCK REPAIR SHOWCASE                  */}
       {/* ================================================================= */}
       <section
+        id="sewing-studio"
         aria-label="On-Site Uniform Sewing and Alterations Department"
         className="max-w-7xl mx-auto py-8 px-4 sm:px-6"
       >
         <div className={`border-2 border-yellow-400/70 p-5 sm:p-8 ${cardBg}`}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             <div className="lg:col-span-7 space-y-3">
-              <div className="inline-flex items-center gap-1.5 bg-yellow-400 text-black font-mono text-xs font-black px-2.5 py-0.5 uppercase">
-                <Scissors className="w-3.5 h-3.5" />
-                <span>In-House Sewing Department • 240 S Bragg Blvd</span>
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="inline-flex items-center gap-1.5 bg-yellow-400 text-black font-mono text-xs font-black px-2.5 py-0.5 uppercase">
+                  <Scissors className="w-3.5 h-3.5" />
+                  <span>In-House Sewing &amp; Alterations • 240 S Bragg Blvd</span>
+                </div>
+                <span className="inline-flex items-center gap-1 bg-emerald-950 text-emerald-300 border border-emerald-500/50 font-mono text-[11px] font-bold px-2.5 py-0.5 uppercase">
+                  ⚡ Live Name Tape &amp; AR 670-1 Sew Builder
+                </span>
               </div>
+
               <h2 className="text-3xl sm:text-4xl font-black uppercase font-['Bebas_Neue'] tracking-wide">
-                AR 670-1 Uniform Sewing, Name Tapes &amp; Heavy Rucksack Repair
+                AR 670-1 Uniform Sewing, Name Tapes, Berets &amp; Heavy Ruck Repair
               </h2>
               <p className="text-xs sm:text-sm opacity-85 leading-relaxed">
-                Whether you have a change-of-command inspection tomorrow morning, need fresh OCP name tapes and Airborne/Air Assault/Ranger badges sewn to exact regulation tolerances, or blew out a zipper on your MOLLE II ruck before field recovery—our on-site seamstresses and walking-foot machines get you squared away fast.
+                Almost no sew shop around Fort Bragg lets you preview your uniform online or verify your name tape spelling before you walk in. Use our interactive <strong>AR 670-1 Sew &amp; Name Tape Studio</strong> to type your last name, stack your Airborne / Air Assault / CIB badges, configure Patrol Cap cat-eyes or AGSU (&ldquo;Pinks &amp; Greens&rdquo;) alterations, and generate a zero-typo Counter Drop-Off Ticket.
               </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                 <div className={`p-3 border ${subtleBg}`}>
                   <div className="font-mono font-bold text-xs text-yellow-500 uppercase">
-                    ✓ Full OCP Coat Setup ($22)
+                    ✓ Full OCP Strip-Velcro &amp; Sew-Down ($22)
                   </div>
                   <p className="text-[11px] mt-1">
-                    Name tape, U.S. Army tape, centered rank, and up to 2 skill badges stitched straight and regulation-compliant.
+                    Name tape, U.S. Army tape, centered rank, and up to 2 skill badges stitched with 1/4-inch DA PAM 670-1 precision.
                   </p>
                 </div>
                 <div className={`p-3 border ${subtleBg}`}>
                   <div className="font-mono font-bold text-xs text-yellow-500 uppercase">
-                    ✓ Heavy Cordura &amp; Ruck Repair ($20+)
+                    ✓ PC Cat-Eyes ($12) • Beret Flash ($16)
                   </div>
                   <p className="text-[11px] mt-1">
-                    Industrial needle repair for torn rucksack shoulder straps, Sustainment pouch buckles, and sleeping bag bivy zippers.
+                    Patrol cap name tapes + luminous glow cat-eyes, plus Airborne Maroon, Ranger Tan &amp; SF Green beret flash prep.
                   </p>
                 </div>
+                <div className={`p-3 border ${subtleBg}`}>
+                  <div className="font-mono font-bold text-xs text-yellow-500 uppercase">
+                    ✓ AGSU &ldquo;Pinks &amp; Greens&rdquo; Tailoring ($14+)
+                  </div>
+                  <p className="text-[11px] mt-1">
+                    Unit patches, combat patches, service stripes, overseas bars, and promotion board dress trouser hemming.
+                  </p>
+                </div>
+                <div className={`p-3 border ${subtleBg}`}>
+                  <div className="font-mono font-bold text-xs text-yellow-500 uppercase">
+                    ✓ Heavy #10 Ruck Zippers &amp; Straps ($20+)
+                  </div>
+                  <p className="text-[11px] mt-1">
+                    Don&apos;t pay $412 at CIF for a blown ruck zipper—our walking-foot machines stitch right through 1000D Cordura.
+                  </p>
+                </div>
+              </div>
+
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setIsSewingModalOpen(true)}
+                  className="inline-flex items-center gap-2 bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs sm:text-sm uppercase py-3 px-5 shadow-lg cursor-pointer transition"
+                >
+                  <Scissors className="w-4 h-4" />
+                  <span>🧵 Launch Interactive Name Tape &amp; Sew Ticket Builder</span>
+                </button>
               </div>
             </div>
 
             <div className="lg:col-span-5 space-y-3">
+              {/* Live Mini Name Tape Visualizer Card */}
               <div className={`p-4 border-2 border-emerald-500/60 ${subtleBg} space-y-3`}>
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-xs font-black uppercase text-emerald-400">
@@ -693,20 +729,40 @@ export default function StorefrontLayout() {
                 </div>
                 <p className="font-bold text-base">{sewingStatus.label}</p>
                 <p className="text-xs opacity-85">{sewingStatus.subtext}</p>
-                <div className="pt-2 flex flex-wrap gap-2">
-                  <a
-                    href={`tel:${storeInfo.phoneRaw}`}
-                    className="flex-1 text-center bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase py-2.5 px-3"
+
+                {/* Sample Woven OCP Tape Strip */}
+                <div
+                  onClick={() => setIsSewingModalOpen(true)}
+                  className="p-3 bg-zinc-950/90 border border-zinc-800 cursor-pointer hover:border-yellow-400 transition space-y-2"
+                  title="Click to customize your own Last Name & Rank"
+                >
+                  <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400 uppercase">
+                    <span>Interactive AR 670-1 Tape Preview</span>
+                    <span className="text-yellow-400 font-bold">Tap to Type Your Name →</span>
+                  </div>
+                  <div className="h-9 bg-gradient-to-r from-[#5b5d44] via-[#7c7455] to-[#464935] border-2 border-[#3c3f2d] flex items-center justify-center relative">
+                    <div className="absolute inset-1 border border-dashed border-black/40 pointer-events-none" />
+                    <span className="font-mono font-black text-base tracking-[0.28em] text-[#141413]">
+                      OLD SARGE • FT BRAGG
+                    </span>
+                  </div>
+                </div>
+
+                <div className="pt-1 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIsSewingModalOpen(true)}
+                    className="flex-1 text-center bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase py-2.5 px-3 cursor-pointer"
                   >
-                    Call Sewing Desk: {storeInfo.phone}
-                  </a>
+                    Build Custom Sew Ticket →
+                  </button>
                   <button
                     type="button"
                     onClick={() => setIsTvBoardOpen(true)}
                     className="inline-flex items-center justify-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-yellow-300 border border-yellow-500/40 font-mono font-bold text-xs uppercase py-2.5 px-3 cursor-pointer"
                   >
                     <Tv className="w-3.5 h-3.5" />
-                    <span>Open 1080p Counter TV</span>
+                    <span>1080p TV</span>
                   </button>
                 </div>
               </div>

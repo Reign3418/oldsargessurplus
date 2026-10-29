@@ -9,6 +9,7 @@ import { Monitor } from 'lucide-react';
 const HoldPullSheetDrawer = lazy(() => import('./components/HoldPullSheetDrawer'));
 const DisambiguationModal = lazy(() => import('./components/DisambiguationModal'));
 const CifCalculatorModal = lazy(() => import('./components/CifCalculatorModal'));
+const SewingAlterationsModal = lazy(() => import('./components/SewingAlterationsModal'));
 const OwnerAdminModal = lazy(() => import('./components/OwnerAdminModal'));
 const CounterTvModal = lazy(() => import('./components/CounterTvModal'));
 const StoreTwinSimulatorModal = lazy(() => import('./components/StoreTwinSimulatorModal'));
@@ -76,6 +77,7 @@ function AppContent({ onLockSite }) {
         <HoldPullSheetDrawer />
         <DisambiguationModal />
         <CifCalculatorModal />
+        <SewingAlterationsModal />
         <OwnerAdminModal />
         <CounterTvModal />
         <StoreTwinSimulatorModal />

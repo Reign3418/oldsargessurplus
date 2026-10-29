@@ -40,6 +40,7 @@ export default function MobileAppView() {
     setIsDisambiguationModalOpen,
     setIsAdminModalOpen,
     setIsCifCalculatorOpen,
+    setIsSewingModalOpen,
     setIsWhitePaperOpen,
     setIsTvBoardOpen
   } = useSurplus();
@@ -640,12 +641,12 @@ export default function MobileAppView() {
             </button>
           </div>
 
-          {/* On-Site Sewing & Ruck Repair Board */}
+          {/* On-Site Sewing, Name Tape Visualizer & Ruck Repair Board */}
           <div className={`p-4 border-2 border-yellow-400/70 space-y-3 ${bgCard}`}>
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-1 text-yellow-400 font-mono text-xs font-black uppercase">
                 <Scissors className="w-4 h-4" />
-                <span>On-Site Sewing Room</span>
+                <span>AR 670-1 Sew &amp; Name Tape Studio</span>
               </span>
               <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 font-mono text-[10px] font-bold px-2 py-0.5">
                 Walk-Ins Open
@@ -655,6 +656,34 @@ export default function MobileAppView() {
             <div className="p-2.5 bg-emerald-950/60 border border-emerald-500/50 text-white text-xs">
               <div className="font-mono font-black text-emerald-300">{sewingStatus.label}</div>
               <div className="text-[11px] opacity-90 mt-0.5">{sewingStatus.cutoffTime}</div>
+            </div>
+
+            {/* Interactive Name Tape Preview + Studio Launcher */}
+            <div
+              onClick={() => setIsSewingModalOpen(true)}
+              className="p-3 bg-zinc-950 border border-yellow-400/50 space-y-2 cursor-pointer"
+            >
+              <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400 uppercase">
+                <span>Live OCP Name Tape Preview</span>
+                <span className="text-yellow-400 font-bold">Tap to Type Your Name →</span>
+              </div>
+              <div className="h-9 bg-gradient-to-r from-[#5b5d44] via-[#7c7455] to-[#464935] border-2 border-[#3c3f2d] flex items-center justify-center relative">
+                <div className="absolute inset-1 border border-dashed border-black/40 pointer-events-none" />
+                <span className="font-mono font-black text-sm tracking-[0.26em] text-[#141413]">
+                  OLD SARGE • FT BRAGG
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsSewingModalOpen(true);
+                }}
+                className="w-full py-2.5 bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 shadow"
+              >
+                <Scissors className="w-3.5 h-3.5" />
+                <span>🧵 Open Interactive Name Tape &amp; Sew Builder</span>
+              </button>
             </div>
 
             <div className="space-y-2">
