@@ -99,7 +99,7 @@ export default function StorefrontLayout() {
               OFFICIAL NC STOREFRONT
             </span>
             <p className="text-zinc-100 leading-snug">
-              <strong>240 S Bragg Blvd, Spring Lake, NC 28390</strong> (Outside Fort Liberty) • We have{' '}
+              <strong>240 S Bragg Blvd, Spring Lake, NC 28390</strong> (Outside Fort Bragg) • We have{' '}
               <strong className="text-yellow-300 underline">ZERO affiliation</strong> with{' '}
               <em>&ldquo;Old Sarge&apos;s Drop Zone&rdquo;</em> in Westfield, NY.
             </p>
@@ -145,7 +145,7 @@ export default function StorefrontLayout() {
             <div className="space-y-2.5">
               <div className="inline-flex flex-wrap items-center gap-2">
                 <span className="bg-yellow-400/15 border border-yellow-500/50 text-yellow-400 px-2.5 py-0.5 text-[11px] font-mono font-bold uppercase tracking-widest">
-                  FORT LIBERTY / SPRING LAKE, NC
+                  FORT BRAGG / SPRING LAKE, NC
                 </span>
                 <span className="bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 px-2.5 py-0.5 text-[11px] font-mono font-bold uppercase tracking-widest">
                   ★ 4.3 GOOGLE MAPS (35+ HELPFUL STAFF)
@@ -166,7 +166,7 @@ export default function StorefrontLayout() {
                 }`}
               >
                 Authentic USGI Military Surplus, CIF Turn-In &amp; Packing List Replacements, Rucksacks, MOLLE II Pouches, Poncho Liners (Woobies), Combat Boots, Ammo Cans &amp;{' '}
-                <strong>In-House Uniform Sewing / Ruck Repair</strong> right outside Fort Liberty.
+                <strong>In-House Uniform Sewing / Ruck Repair</strong> right outside Fort Bragg.
               </p>
 
               {/* Action Buttons Row */}
@@ -227,7 +227,7 @@ export default function StorefrontLayout() {
                   </div>
                   <p className="font-bold">{storeInfo.address}</p>
                   <p className="text-[11px] opacity-80 mt-0.5">
-                    Minutes from Fort Liberty Gates
+                    Minutes from Fort Bragg Gates
                   </p>
                   <a
                     href={storeInfo.googleMapsUrl}
@@ -285,7 +285,7 @@ export default function StorefrontLayout() {
       {/* 3. FRESH CRATE ARRIVALS & CIF TURN-IN SAVERS RAIL                 */}
       {/* ================================================================= */}
       <section
-        aria-label="Fresh Fort Liberty Surplus Crate Arrivals"
+        aria-label="Fresh Fort Bragg Surplus Crate Arrivals"
         className="max-w-7xl mx-auto py-8 px-4 sm:px-6"
       >
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-5">
@@ -711,7 +711,7 @@ export default function StorefrontLayout() {
               </div>
             </div>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Family-owned and operated in Spring Lake, North Carolina outside Fort Liberty. All trademarks, NSN references, and USGI nomenclature are used strictly for surplus identification.
+              Family-owned and operated in Spring Lake, North Carolina outside Fort Bragg. All trademarks, NSN references, and USGI nomenclature are used strictly for surplus identification.
             </p>
           </div>
 

@@ -84,7 +84,7 @@ export default function DisambiguationModal() {
                     Old Sarge&apos;s Surplus (Old Sarge Surplus)
                   </h3>
                   <p className="text-xs text-emerald-300 font-semibold">
-                    Family-Owned Outside Fort Liberty for 30+ Years
+                    Family-Owned Outside Fort Bragg for 30+ Years
                   </p>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function DisambiguationModal() {
                 As shown in the review screenshot on the left, online shoppers who had fulfillment issues with <strong>Old Sarge&apos;s Drop Zone in New York</strong> accidentally searched &ldquo;Old Sarge Surplus&rdquo; on Google Maps and posted 1-star reviews on our <strong>Spring Lake, NC</strong> storefront.
               </p>
               <p className="text-xs text-zinc-300 leading-relaxed">
-                By launching our official domain (<strong>oldsargessurplus.com</strong>) with embedded <strong>Schema.org Entity Disambiguation</strong> and this consumer verification shield, both Google&apos;s search algorithm and online buyers can immediately distinguish our Fort Liberty / Spring Lake store from the unrelated New York website.
+                By launching our official domain (<strong>oldsargessurplus.com</strong>) with embedded <strong>Schema.org Entity Disambiguation</strong> and this consumer verification shield, both Google&apos;s search algorithm and online buyers can immediately distinguish our Fort Bragg / Spring Lake store from the unrelated New York website.
               </p>
               <div className="pt-1 flex flex-wrap gap-2">
                 <a

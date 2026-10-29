@@ -65,7 +65,7 @@ export default function CifCalculatorModal() {
             </div>
             <div>
               <span className="inline-block bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 font-mono text-[10px] font-bold uppercase tracking-widest px-2 py-0.5 mb-1">
-                Fort Liberty PCS / ETS / School Packing List Readiness Tool
+                Fort Bragg PCS / ETS / School Packing List Readiness Tool
               </span>
               <h2
                 id="cif-calc-title"
@@ -74,7 +74,7 @@ export default function CifCalculatorModal() {
                 CIF Turn-In &amp; Statement-of-Charges Savings Calculator
               </h2>
               <p className="text-xs text-zinc-300">
-                Check off any missing or damaged OCIE gear below to compare Fort Liberty CIF Statement-of-Charges deductions against our in-store Bragg Blvd replacement prices.
+                Check off any missing or damaged OCIE gear below to compare Fort Bragg CIF Statement-of-Charges deductions against our in-store Bragg Blvd replacement prices.
               </p>
             </div>
           </div>
@@ -162,7 +162,7 @@ export default function CifCalculatorModal() {
               </div>
 
               <p className="text-[11px] text-zinc-300 leading-relaxed">
-                <strong className="text-yellow-300">Counter Pro-Tip:</strong> Bring your CIF clothing record printout to <strong>240 S Bragg Blvd</strong>. Our staff knows the exact NSN and generation patterns Fort Liberty CIF accepts so you pass on the first turn-in.
+                <strong className="text-yellow-300">Counter Pro-Tip:</strong> Bring your CIF clothing record printout to <strong>240 S Bragg Blvd</strong>. Our staff knows the exact NSN and generation patterns Fort Bragg CIF accepts so you pass on the first turn-in.
               </p>
             </div>
 

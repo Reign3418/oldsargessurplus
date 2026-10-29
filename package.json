@@ -2,7 +2,7 @@
   "name": "oldsargessurplus",
   "version": "1.0.0",
   "type": "module",
-  "description": "Old Sarge's Surplus (240 S Bragg Blvd, Spring Lake, NC 28390) — Official Fort Liberty Military Surplus, CIF Readiness & On-Site Sewing Portal",
+  "description": "Old Sarge's Surplus (240 S Bragg Blvd, Spring Lake, NC 28390) — Official Fort Bragg Military Surplus, CIF Readiness & On-Site Sewing Portal",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

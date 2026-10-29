@@ -15,7 +15,7 @@
 
 ## 2. WCAG 2.1 AA & ADA Title III Accessibility Compliance
 
-- **High-Contrast Typography & Color Ratios:** All three visual themes (`Hangar Gold & Steel`, `Fort Liberty Olive Drab`, and `Daylight Counter`) enforce high-contrast foreground/background pairings (`>= 4.5:1` for body text, `>= 7:1` for primary headings and price tags).
+- **High-Contrast Typography & Color Ratios:** All three visual themes (`Hangar Gold & Steel`, `Fort Bragg Olive Drab`, and `Daylight Counter`) enforce high-contrast foreground/background pairings (`>= 4.5:1` for body text, `>= 7:1` for primary headings and price tags).
 - **Keyboard & Screen-Reader Navigation:** All interactive modals (`role="dialog"`, `aria-modal="true"`, `aria-labelledby`), search controls, and stock filters include semantic labels and full keyboard accessibility.
 - **Reduced Motion Support:** Enforces `@media (prefers-reduced-motion: reduce)` across all transitions and animations in `src/index.css`.
 - **Zero-JS / Crawler Fallback:** Provides a complete semantic `<header>`, `<h1>`, store address, telephone link, disambiguation notice, and inquiry form inside `<div id="root">` prior to client hydration.
@@ -37,4 +37,4 @@
 
 ## 4. USGI Surplus & Nomenclature Disclosure
 
-- National Stock Numbers (`NSN`), U.S. Government Issue (`USGI`) designations, and AR 670-1 uniform specifications are provided strictly for identification, historical reference, and Fort Liberty CIF replacement comparison. Condition grades (`Unissued`, `Grade 1 Serviceable`, `Grade 2 Field`) are verified in person at the 240 S Bragg Blvd counter prior to purchase.
+- National Stock Numbers (`NSN`), U.S. Government Issue (`USGI`) designations, and AR 670-1 uniform specifications are provided strictly for identification, historical reference, and Fort Bragg CIF replacement comparison. Condition grades (`Unissued`, `Grade 1 Serviceable`, `Grade 2 Field`) are verified in person at the 240 S Bragg Blvd counter prior to purchase.

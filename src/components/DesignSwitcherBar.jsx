@@ -35,7 +35,7 @@ export default function DesignSwitcherBar({ onLockSite }) {
     },
     {
       id: 'olivedrab',
-      name: '2. Fort Liberty OD',
+      name: '2. Fort Bragg OD',
       dot: 'bg-emerald-500',
       icon: ShieldCheck
     },
@@ -60,7 +60,7 @@ export default function DesignSwitcherBar({ onLockSite }) {
             aria-label="Select storefront layout theme"
           >
             <option value="hangar">🚁 Hangar Gold</option>
-            <option value="olivedrab">🪖 Ft. Liberty OD</option>
+            <option value="olivedrab">🪖 Ft. Bragg OD</option>
             <option value="daylight">☀️ Daylight Counter</option>
           </select>
         </div>
@@ -169,7 +169,7 @@ export default function DesignSwitcherBar({ onLockSite }) {
             type="button"
             onClick={() => setIsCifCalculatorOpen(true)}
             className="flex items-center gap-1 px-2.5 py-1 rounded-none text-xs font-black transition cursor-pointer bg-emerald-600 hover:bg-emerald-500 text-white border border-emerald-400 shadow-sm"
-            title="Interactive Fort Liberty CIF Turn-In & Packing List Savings Calculator"
+            title="Interactive Fort Bragg CIF Turn-In & Packing List Savings Calculator"
           >
             <Calculator className="w-3.5 h-3.5 shrink-0" />
             <span className="whitespace-nowrap">🎒 CIF Calculator</span>

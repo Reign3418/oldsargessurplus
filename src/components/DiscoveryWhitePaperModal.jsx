@@ -119,7 +119,7 @@ export default function DiscoveryWhitePaperModal() {
                 1. NSN &amp; CIF Search SEO
               </h5>
               <p className="text-[11px] text-zinc-300">
-                When a Fort Liberty soldier searches <em>&ldquo;MOLLE II ruck near me&rdquo;</em> or <em>&ldquo;CIF turn in gear Spring Lake&rdquo;</em>, your 8 Tactical Bays rank at the top.
+                When a Fort Bragg soldier searches <em>&ldquo;MOLLE II ruck near me&rdquo;</em> or <em>&ldquo;CIF turn in gear Spring Lake&rdquo;</em>, your 8 Tactical Bays rank at the top.
               </p>
             </div>
 

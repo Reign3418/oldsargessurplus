@@ -131,7 +131,7 @@ export default function CounterTvModal() {
             <div className="flex items-center justify-between border-b border-zinc-700 pb-1.5">
               <span className="inline-flex items-center gap-1.5 font-mono text-sm font-black uppercase text-yellow-400">
                 <Sparkles className="w-4 h-4" />
-                <span>Featured Floor Crates &amp; Fort Liberty CIF Savers</span>
+                <span>Featured Floor Crates &amp; Fort Bragg CIF Savers</span>
               </span>
               <span className="font-mono text-xs text-emerald-400 uppercase font-bold">
                 Ask Counter for Bulk / Unit Pricing

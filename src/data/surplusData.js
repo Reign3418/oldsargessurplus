@@ -1,9 +1,9 @@
 export const STORE_INFO = {
   name: "Old Sarge's Surplus",
-  dba: "Old Sarge Surplus — Spring Lake / Fort Liberty",
-  tagline: "30+ Years Outfitting Fort Liberty • Genuine USGI Surplus • CIF Turn-In Readiness • On-Site Uniform Sewing",
+  dba: "Old Sarge Surplus — Spring Lake / Fort Bragg",
+  tagline: "30+ Years Outfitting Fort Bragg • Genuine USGI Surplus • CIF Turn-In Readiness • On-Site Uniform Sewing",
   address: "240 S Bragg Blvd, Spring Lake, NC 28390",
-  landmark: "Directly on Bragg Blvd between Fort Liberty (Butner/Honeycutt Corridor) & Spring Lake",
+  landmark: "Directly on Bragg Blvd between Fort Bragg (Butner/Honeycutt Corridor) & Spring Lake",
   phone: "(910) 497-5335",
   phoneRaw: "9104975335",
   domain: "oldsargessurplus.com",
@@ -44,7 +44,7 @@ export const INITIAL_SEWING_STATUS = {
 export const INITIAL_FEATURED_DROPS = [
   {
     id: "drop-1",
-    badge: "FRESH FORT LIBERTY CRATE",
+    badge: "FRESH FORT BRAGG CRATE",
     title: "Complete OCP MOLLE II Large Rucksacks (Frame + Sustainment Pouches)",
     condition: "Grade 1 Serviceable / CIF Ready",
     nsn: "8465-01-641-6331",
