@@ -110,15 +110,15 @@ export default function StorefrontLayout() {
       {/* ================================================================= */}
       <section
         aria-label="Official Storefront Verification & Disambiguation Notice"
-        className="bg-gradient-to-r from-rose-950 via-[#1D1115] to-[#131822] border-b-2 border-yellow-400/70 text-white py-2.5 px-3 sm:px-6"
+        className="bg-gradient-to-r from-rose-950 via-[#1D1115] to-[#131822] border-b border-yellow-400/70 text-white py-1.5 px-3 sm:px-6"
       >
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
-          <div className="flex items-start sm:items-center gap-2.5 text-xs">
-            <span className="bg-yellow-400 text-black font-mono font-black px-2 py-0.5 text-[10px] uppercase tracking-wider shrink-0 mt-0.5 sm:mt-0">
-              OFFICIAL NC STOREFRONT
+          <div className="flex items-start sm:items-center gap-2 text-xs">
+            <span className="bg-yellow-400 text-black font-mono font-black px-1.5 py-0.5 text-[10px] uppercase tracking-wider shrink-0 mt-0.5 sm:mt-0 rounded-xs">
+              OFFICIAL NC STORE
             </span>
             <p className="text-zinc-100 leading-snug">
-              <strong>240 S Bragg Blvd, Spring Lake, NC 28390</strong> (Outside Fort Bragg) • We have{' '}
+              <strong>240 S Bragg Blvd, Spring Lake, NC</strong> (Fort Bragg) •{' '}
               <strong className="text-yellow-300 underline">ZERO affiliation</strong> with{' '}
               <em>&ldquo;Old Sarge&apos;s Drop Zone&rdquo;</em> in Westfield, NY.
             </p>
@@ -127,10 +127,10 @@ export default function StorefrontLayout() {
           <button
             type="button"
             onClick={() => setIsDisambiguationModalOpen(true)}
-            className="inline-flex items-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white font-black text-[11px] uppercase tracking-wider px-3 py-1.5 border border-rose-300 shrink-0 cursor-pointer shadow"
+            className="inline-flex items-center gap-1.5 bg-rose-600 hover:bg-rose-500 text-white font-black text-[11px] uppercase tracking-wide px-2.5 py-1 border border-rose-300/80 rounded-xs shrink-0 cursor-pointer shadow"
           >
-            <ShieldAlert className="w-3.5 h-3.5 shrink-0" />
-            <span>Missing a NY Website Order? Click Before Reviewing →</span>
+            <ShieldAlert className="w-3 h-3 shrink-0" />
+            <span>Missing a NY Order? Click Before Reviewing →</span>
           </button>
         </div>
       </section>
