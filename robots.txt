@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# AI Search & Generative Engine Optimization (GEO) Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://oldsargessurplus.com/sitemap.xml
+# LLMs & Entity Disambiguation Index: https://oldsargessurplus.com/llms.txt
