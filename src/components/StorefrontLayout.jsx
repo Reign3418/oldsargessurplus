@@ -63,7 +63,9 @@ export default function StorefrontLayout() {
     activeBayId,
     setActiveBayId,
     cifOnlyFilter,
-    setCifOnlyFilter
+    setCifOnlyFilter,
+    showCifComparison,
+    setShowCifComparison
   } = useSurplus();
 
   const [copiedWayfinding, setCopiedWayfinding] = useState(false);
@@ -377,14 +379,16 @@ export default function StorefrontLayout() {
                             ${drop.storePrice}
                           </span>
                         </div>
-                        <div className="text-right">
-                          <span className="text-[11px] line-through opacity-60 block font-mono">
-                            CIF Charge: ${drop.cifCharge}
-                          </span>
-                          <span className="text-xs font-mono font-bold text-emerald-400">
-                            Save ${savings}
-                          </span>
-                        </div>
+                        {showCifComparison && (
+                          <div className="text-right">
+                            <span className="text-[11px] text-zinc-400 block font-mono">
+                              Army CIF Fine: ${drop.cifCharge}
+                            </span>
+                            <span className="text-xs font-mono font-bold text-emerald-400">
+                              Soldier Saves ${savings}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       <button
@@ -423,22 +427,36 @@ export default function StorefrontLayout() {
                     Live Storefront Inventory &amp; NSN Locker Matrix (8 Tactical Bays)
                   </h2>
                   <p className="text-xs opacity-80">
-                    Search by gear name, NSN (e.g., <code className="font-mono">8465-01-641-6331</code>), or filter by CIF Turn-In essentials.
+                    Search by gear name, NSN (e.g., <code className="font-mono">8465-01-641-6331</code>), or toggle Army Fort Bragg CIF Statement-of-Charges comparison.
                   </p>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={() => setCifOnlyFilter(!cifOnlyFilter)}
-                  className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono font-bold uppercase border cursor-pointer transition ${
-                    cifOnlyFilter
-                      ? 'bg-emerald-600 text-white border-emerald-400 shadow'
-                      : 'bg-[#0B0E14] border-[#1F2735] text-zinc-300 hover:border-yellow-400'
-                  }`}
-                >
-                  <Filter className="w-3.5 h-3.5" />
-                  <span>{cifOnlyFilter ? '✓ CIF Essentials Only' : 'Filter: CIF Turn-In Gear Only'}</span>
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowCifComparison(!showCifComparison)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono font-bold uppercase border cursor-pointer transition ${
+                      showCifComparison
+                        ? 'bg-amber-500/20 text-amber-300 border-amber-400/60'
+                        : 'bg-[#0B0E14] border-[#1F2735] text-zinc-400'
+                    }`}
+                  >
+                    <span>{showCifComparison ? '✓ Army CIF Fines: SHOWN' : 'Army CIF Fines: HIDDEN'}</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setCifOnlyFilter(!cifOnlyFilter)}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono font-bold uppercase border cursor-pointer transition ${
+                      cifOnlyFilter
+                        ? 'bg-emerald-600 text-white border-emerald-400 shadow'
+                        : 'bg-[#0B0E14] border-[#1F2735] text-zinc-300 hover:border-yellow-400'
+                    }`}
+                  >
+                    <Filter className="w-3.5 h-3.5" />
+                    <span>{cifOnlyFilter ? '✓ CIF Essentials Only' : 'Filter: CIF Gear Only'}</span>
+                  </button>
+                </div>
               </div>
 
               <div className="relative">
@@ -554,13 +572,13 @@ export default function StorefrontLayout() {
                                 </span>
                               </div>
 
-                              {cifSavings > 0 && (
+                              {showCifComparison && cifSavings > 0 && (
                                 <div className="text-right">
-                                  <span className="text-[11px] font-mono line-through opacity-60 block">
-                                    CIF Charge: ${item.cifCharge}
+                                  <span className="text-[11px] font-mono text-zinc-400 block">
+                                    Army CIF Fine: ${item.cifCharge}
                                   </span>
                                   <span className="text-emerald-400 font-mono text-xs font-extrabold">
-                                    Save ${cifSavings}
+                                    Soldier Saves ${cifSavings}
                                   </span>
                                 </div>
                               )}
@@ -785,17 +803,31 @@ export default function StorefrontLayout() {
                     />
                   </div>
 
-                  <button
-                    type="button"
-                    onClick={() => setCifOnlyFilter(!cifOnlyFilter)}
-                    className={`px-3 py-2 text-xs font-mono font-bold uppercase border cursor-pointer shrink-0 ${
-                      cifOnlyFilter
-                        ? 'bg-emerald-500 text-black border-white font-black'
-                        : 'bg-[#0D120B] text-emerald-300 border-emerald-500/40'
-                    }`}
-                  >
-                    {cifOnlyFilter ? '✓ CIF Turn-In Items Only' : 'Filter: CIF Turn-In Only'}
-                  </button>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => setShowCifComparison(!showCifComparison)}
+                      className={`px-3 py-2 text-xs font-mono font-bold uppercase border cursor-pointer ${
+                        showCifComparison
+                          ? 'bg-amber-500/20 text-amber-300 border-amber-400/60'
+                          : 'bg-[#0D120B] text-zinc-400 border-[#2D3B26]'
+                      }`}
+                    >
+                      {showCifComparison ? '✓ Army CIF Fines: ON' : 'Army CIF Fines: OFF'}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setCifOnlyFilter(!cifOnlyFilter)}
+                      className={`px-3 py-2 text-xs font-mono font-bold uppercase border cursor-pointer ${
+                        cifOnlyFilter
+                          ? 'bg-emerald-500 text-black border-white font-black'
+                          : 'bg-[#0D120B] text-emerald-300 border-emerald-500/40'
+                      }`}
+                    >
+                      {cifOnlyFilter ? '✓ CIF Turn-In Only' : 'Filter: CIF Only'}
+                    </button>
+                  </div>
                 </div>
 
                 {/* Dense NSN Ledger Tables by Bay */}
@@ -822,7 +854,9 @@ export default function StorefrontLayout() {
                             <th className="py-2.5 px-3">NSN / Stock No.</th>
                             <th className="py-2.5 px-3">Nomenclature &amp; Technical Spec</th>
                             <th className="py-2.5 px-3">Status</th>
-                            <th className="py-2.5 px-3 text-right">CIF Charge</th>
+                            {showCifComparison && (
+                              <th className="py-2.5 px-3 text-right">Army CIF Fine</th>
+                            )}
                             <th className="py-2.5 px-3 text-right">Store Price</th>
                             <th className="py-2.5 px-3 text-right">Action</th>
                           </tr>
@@ -852,14 +886,18 @@ export default function StorefrontLayout() {
                                     {badge.shortLabel}
                                   </span>
                                 </td>
-                                <td className="py-3 px-3 font-mono text-right align-top whitespace-nowrap">
-                                  <div className="line-through text-zinc-400">${item.cifCharge}</div>
-                                  {savings > 0 && (
-                                    <div className="text-[10px] text-emerald-400 font-bold">
-                                      Save ${savings}
+                                {showCifComparison && (
+                                  <td className="py-3 px-3 font-mono text-right align-top whitespace-nowrap">
+                                    <div className="text-[11px] text-zinc-300">
+                                      Army Fine: ${item.cifCharge}
                                     </div>
-                                  )}
-                                </td>
+                                    {savings > 0 && (
+                                      <div className="text-[10px] text-emerald-400 font-bold">
+                                        Soldier Saves ${savings}
+                                      </div>
+                                    )}
+                                  </td>
+                                )}
                                 <td className="py-3 px-3 font-mono text-right align-top whitespace-nowrap">
                                   <span className="text-lg font-black text-emerald-400">
                                     ${item.price}
@@ -1080,15 +1118,29 @@ export default function StorefrontLayout() {
                   ))}
                 </div>
 
-                <div className="relative min-w-[240px]">
-                  <Search className="w-3.5 h-3.5 text-amber-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                  <input
-                    type="search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search catalog items or NSN..."
-                    className="w-full pl-8 pr-3 py-1 rounded bg-zinc-900 border border-zinc-700 text-xs text-white focus:outline-none focus:border-amber-400"
-                  />
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setShowCifComparison(!showCifComparison)}
+                    className={`px-2.5 py-1 rounded border text-[11px] font-mono font-bold cursor-pointer transition ${
+                      showCifComparison
+                        ? 'bg-emerald-950/60 border-emerald-500/50 text-emerald-300'
+                        : 'bg-zinc-900 border-zinc-700 text-zinc-400'
+                    }`}
+                    title="Toggle U.S. Army CIF Statement-of-Charges fine comparison on or off"
+                  >
+                    Army CIF Fines: {showCifComparison ? 'ON' : 'OFF'}
+                  </button>
+                  <div className="relative min-w-[220px]">
+                    <Search className="w-3.5 h-3.5 text-amber-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                    <input
+                      type="search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search catalog items or NSN..."
+                      className="w-full pl-8 pr-3 py-1 rounded bg-zinc-900 border border-zinc-700 text-xs text-white focus:outline-none focus:border-amber-400"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1143,9 +1195,9 @@ export default function StorefrontLayout() {
                             <div className="text-2xl font-black font-mono text-[#B45309]">
                               ${item.price}
                             </div>
-                            {cifSavings > 0 && (
+                            {showCifComparison && cifSavings > 0 && (
                               <div className="text-[11px] font-mono text-emerald-700 font-bold">
-                                Save ${cifSavings} vs CIF (${item.cifCharge})
+                                Army CIF Fine: ${item.cifCharge} (Save ${cifSavings})
                               </div>
                             )}
                           </div>

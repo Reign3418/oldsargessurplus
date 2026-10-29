@@ -44,6 +44,8 @@ export default function MobileAppView() {
     setIsEbaySyncModalOpen,
     ebaySyncMeta,
     runEbayFeedSync,
+    showCifComparison,
+    setShowCifComparison,
     setIsWhitePaperOpen,
     setIsTvBoardOpen
   } = useSurplus();
@@ -333,9 +335,11 @@ export default function MobileAppView() {
                           <span className="bg-yellow-400 text-black font-mono text-[9px] font-black px-1.5 py-0.5 uppercase">
                             {drop.badge}
                           </span>
-                          <span className="text-[10px] font-mono font-bold text-emerald-400">
-                            Save ${saved}
-                          </span>
+                          {showCifComparison && (
+                            <span className="text-[10px] font-mono font-bold text-emerald-400">
+                              Save ${saved} vs CIF
+                            </span>
+                          )}
                         </div>
                         <div className="font-bold text-xs leading-snug line-clamp-2">
                           {drop.title}
@@ -350,9 +354,11 @@ export default function MobileAppView() {
                           <span className="text-lg font-black font-mono text-yellow-500">
                             ${drop.storePrice}
                           </span>
-                          <span className="text-[10px] line-through opacity-60 font-mono ml-1.5">
-                            CIF ${drop.cifCharge}
-                          </span>
+                          {showCifComparison && (
+                            <span className="text-[10px] opacity-75 font-mono ml-1.5">
+                              Army CIF Fine: ${drop.cifCharge}
+                            </span>
+                          )}
                         </div>
                         <button
                           type="button"
@@ -446,9 +452,9 @@ export default function MobileAppView() {
                                 <span className={`text-sm font-black ${accentText}`}>
                                   ${item.price}
                                 </span>
-                                {cifSavings > 0 && (
+                                {showCifComparison && cifSavings > 0 && (
                                   <span className="text-[10px] text-emerald-400 font-bold">
-                                    • Saves ${cifSavings} vs CIF (${item.cifCharge})
+                                    • Army CIF Fine: ${item.cifCharge} (Save ${cifSavings})
                                   </span>
                                 )}
                               </div>

@@ -109,6 +109,7 @@ export function SurplusProvider({ children }) {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeBayId, setActiveBayId] = useState('all');
   const [cifOnlyFilter, setCifOnlyFilter] = useState(false);
+  const [showCifComparison, setShowCifComparison] = useState(true);
 
   // Persist updates to localStorage and sync to local Wi-Fi relay if running
   useEffect(() => {
@@ -362,6 +363,78 @@ export function SurplusProvider({ children }) {
     return { newItem, targetBayId };
   };
 
+  // Bulk Import eBay Seller Hub Active Listings CSV Rows
+  const importEbayCsvBatch = (rows) => {
+    if (!Array.isArray(rows) || rows.length === 0) return 0;
+    let addedCount = 0;
+
+    setInventoryBays((prevBays) => {
+      const bayBuckets = {};
+      prevBays.forEach((b) => {
+        bayBuckets[b.id] = [];
+      });
+
+      rows.forEach((row, idx) => {
+        const cleanTitle = (row.title || '').trim();
+        if (!cleanTitle) return;
+        const parsedPrice = Number(String(row.price || '35').replace(/[^0-9.]/g, '')) || 35;
+        const lower = cleanTitle.toLowerCase();
+
+        let targetBayId = 'uniforms-flight';
+        if (lower.includes('ruck') || lower.includes('pack') || lower.includes('mystery ranch') || lower.includes('alice')) {
+          targetBayId = 'rucks-packs';
+        } else if (lower.includes('pouch') || lower.includes('ifak') || lower.includes('vest') || lower.includes('molle')) {
+          targetBayId = 'molle-pouches';
+        } else if (lower.includes('woobie') || lower.includes('sleep') || lower.includes('bivy') || lower.includes('ecwcs') || lower.includes('parka')) {
+          targetBayId = 'ecwcs-sleep';
+        } else if (lower.includes('boot')) {
+          targetBayId = 'boots-footwear';
+        } else if (lower.includes('ammo') || lower.includes('can') || lower.includes('pelican') || lower.includes('hardigg')) {
+          targetBayId = 'ammo-cans-hardware';
+        } else if (lower.includes('helmet') || lower.includes('ach') || lower.includes('canteen')) {
+          targetBayId = 'helmets-field-gear';
+        }
+
+        const itemObj = {
+          id: `ebay-csv-${Date.now()}-${idx}`,
+          name: cleanTitle,
+          nsn: row.sku || 'EBAY-CSV-SYNC',
+          condition: row.condition || 'eBay Active Listing',
+          price: parsedPrice,
+          cifCharge: Math.round(parsedPrice * 2.05),
+          cifEssential: true,
+          stockStatus: Number(row.qty) === 1 ? 'LOW_STOCK' : 'IN_STOCK',
+          ebaySynced: true,
+          ebayItemNumber: row.itemNumber || `${285950000000 + idx}`,
+          ebayWatchers: Number(row.watchers) || 5,
+          ebayQuery: cleanTitle.split(' ').slice(0, 3).join(' '),
+          description: `Imported from eBay Seller Hub CSV (Item #${row.itemNumber || 'Active'} • Qty: ${row.qty || 1}).`
+        };
+
+        if (bayBuckets[targetBayId]) {
+          bayBuckets[targetBayId].push(itemObj);
+          addedCount++;
+        }
+      });
+
+      const next = prevBays.map((b) => ({
+        ...b,
+        items: [...(bayBuckets[b.id] || []), ...b.items]
+      }));
+      broadcastWifiSync({ inventory: next });
+      return next;
+    });
+
+    setEbaySyncMeta((prev) => ({
+      ...prev,
+      lastSyncedAt: `CSV Upload (${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })})`,
+      syncedListingsCount: prev.syncedListingsCount + rows.length,
+      hasImportedBatch: true
+    }));
+
+    return addedCount;
+  };
+
   // Reset to Default Factory Data
   const resetToFactoryDefaults = () => {
     setInventoryBays(INITIAL_INVENTORY_BAYS);
@@ -456,6 +529,7 @@ export function SurplusProvider({ children }) {
         setEbaySyncMeta,
         runEbayFeedSync,
         importCustomEbayListing,
+        importEbayCsvBatch,
         sewTickets,
         submitSewTicket,
         isTvBoardOpen,
@@ -467,7 +541,9 @@ export function SurplusProvider({ children }) {
         activeBayId,
         setActiveBayId,
         cifOnlyFilter,
-        setCifOnlyFilter
+        setCifOnlyFilter,
+        showCifComparison,
+        setShowCifComparison
       }}
     >
       {children}
