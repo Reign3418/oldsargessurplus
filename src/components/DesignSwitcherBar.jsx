@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSurplus } from '../context/SurplusContext';
 import {
-  Palette,
+  Layout,
   ShieldAlert,
   FileText,
   Calculator,
@@ -27,10 +27,25 @@ export default function DesignSwitcherBar({ onLockSite }) {
     setIsStoreTwinOpen
   } = useSurplus();
 
-  const themes = [
-    { id: 'hangar', label: 'Hangar Gold', dot: 'bg-yellow-400' },
-    { id: 'olivedrab', label: 'Bragg OD', dot: 'bg-emerald-500' },
-    { id: 'daylight', label: 'Daylight', dot: 'bg-amber-600' }
+  const layouts = [
+    {
+      id: 'hangar',
+      label: '1. Tactical Hangar',
+      sub: 'Bento Grid • Gold/Steel',
+      dot: 'bg-yellow-400'
+    },
+    {
+      id: 'olivedrab',
+      label: '2. Quartermaster Ledger',
+      sub: 'Sidebar + NSN Table • OD',
+      dot: 'bg-emerald-500'
+    },
+    {
+      id: 'daylight',
+      label: '3. Heritage Showroom',
+      sub: 'Retail Catalog • Daylight',
+      dot: 'bg-amber-600'
+    }
   ];
 
   return (
@@ -38,16 +53,16 @@ export default function DesignSwitcherBar({ onLockSite }) {
       {/* MOBILE SLIM BAR (<768px) */}
       <div className="md:hidden flex items-center justify-between gap-1.5 w-full">
         <div className="flex items-center gap-1 min-w-0">
-          <Palette className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
+          <Layout className="w-3.5 h-3.5 text-yellow-400 shrink-0" />
           <select
             value={themeVersion}
             onChange={(e) => setThemeVersion(e.target.value)}
-            className="bg-[#12161F] text-yellow-300 border border-[#2E3646] text-[11px] font-bold py-1 px-1.5 rounded focus:outline-none focus:border-yellow-400 max-w-[115px] truncate"
-            aria-label="Select storefront layout theme"
+            className="bg-[#12161F] text-yellow-300 border border-[#2E3646] text-[11px] font-bold py-1 px-1.5 rounded focus:outline-none focus:border-yellow-400 max-w-[140px] truncate"
+            aria-label="Select storefront layout architecture"
           >
-            <option value="hangar">Hangar Gold</option>
-            <option value="olivedrab">Bragg OD</option>
-            <option value="daylight">Daylight</option>
+            <option value="hangar">1. Tactical Hangar</option>
+            <option value="olivedrab">2. NSN Supply Ledger</option>
+            <option value="daylight">3. Daylight Showroom</option>
           </select>
         </div>
 
@@ -101,7 +116,7 @@ export default function DesignSwitcherBar({ onLockSite }) {
 
       {/* DESKTOP & LAPTOP BAR (>=768px) — Compact, Zero-Overflow Layout */}
       <div className="hidden md:flex max-w-7xl mx-auto flex-wrap items-center justify-between gap-y-1.5 gap-x-2">
-        {/* Left Group: Audit + Segmented Theme Pill + Mobile Toggle */}
+        {/* Left Group: Audit + 3 Distinct Layout Architecture Switchers + Mobile Toggle */}
         <div className="flex items-center gap-1.5">
           <button
             type="button"
@@ -113,23 +128,24 @@ export default function DesignSwitcherBar({ onLockSite }) {
             <span>Audit &amp; Plan</span>
           </button>
 
-          {/* Compact Segmented Theme Control */}
-          <div className="flex items-center bg-[#0F131A] border border-[#252D3D] rounded p-0.5">
-            {themes.map((t) => {
-              const isActive = themeVersion === t.id;
+          {/* Segmented 3-Layout Architecture Switcher */}
+          <div className="flex items-center bg-[#0F131A] border border-[#252D3D] rounded p-0.5 gap-0.5">
+            {layouts.map((l) => {
+              const isActive = themeVersion === l.id;
               return (
                 <button
-                  key={t.id}
+                  key={l.id}
                   type="button"
-                  onClick={() => setThemeVersion(t.id)}
-                  className={`flex items-center gap-1 px-2 py-0.5 rounded-xs text-[11px] font-bold transition cursor-pointer ${
+                  onClick={() => setThemeVersion(l.id)}
+                  title={`${l.label} — ${l.sub}`}
+                  className={`flex items-center gap-1.5 px-2.5 py-1 rounded-xs text-[11px] font-bold transition cursor-pointer ${
                     isActive
-                      ? 'bg-[#1F2737] text-white shadow-xs ring-1 ring-yellow-400/60'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-[#1F2737] text-white shadow-xs ring-1 ring-yellow-400/70'
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
                   }`}
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full ${t.dot} shrink-0`} />
-                  <span>{t.label}</span>
+                  <span className={`w-2 h-2 rounded-full ${l.dot} shrink-0`} />
+                  <span>{l.label}</span>
                 </button>
               );
             })}
