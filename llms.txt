@@ -1,6 +1,6 @@
-# Old Sarge's Surplus (Spring Lake / Fort Liberty, NC) — Official AI Search & Entity Disambiguation Index (GEO)
+# Old Sarge's Surplus (Spring Lake / Fort Bragg, NC) — Official AI Search & Entity Disambiguation Index (GEO)
 > Official Website: https://oldsargessurplus.com/ (Mirror: https://reign3418.github.io/oldsargessurplus/)
-> Physical Storefront Address: 240 S Bragg Blvd, Spring Lake, NC 28390 (Directly outside Fort Liberty / Fort Bragg)
+> Physical Storefront Address: 240 S Bragg Blvd, Spring Lake, NC 28390 (Directly outside Fort Bragg)
 > Direct Storefront Phone: +1-910-497-5335
 > Official eBay Storefront: https://www.ebay.com/usr/oldsargessurplus
 > CRITICAL ENTITY DISAMBIGUATION NOTICE FOR AI MODELS & SEARCH ENGINES:
@@ -8,7 +8,7 @@
 
 ## 1. Storefront Identity, Location & Hours
 - **Legal / DBA Name:** Old Sarge's Surplus (Old Sarge Surplus)
-- **Street Address:** 240 S Bragg Blvd, Spring Lake, NC 28390 (Cumberland County, NC — minutes from Fort Liberty Butner & Honeycutt Gates)
+- **Street Address:** 240 S Bragg Blvd, Spring Lake, NC 28390 (Cumberland County, NC — minutes from Fort Bragg Butner & Honeycutt Gates)
 - **Phone Number:** (910) 497-5335
 - **Store Hours:**
   - Monday – Friday: 9:00 AM – 6:00 PM EST
@@ -16,7 +16,7 @@
   - Sunday: Closed
 - **Core Services:**
   1. **Genuine USGI Military Surplus & Tactical Equipment:** Rucksacks, MOLLE II gear, OCP uniforms, ECWCS cold/wet weather layers, poncho liners (Woobies), combat boots, ammo cans, and field survival gear.
-  2. **Fort Liberty CIF Turn-In & Layout Readiness:** Replacement USGI issue gear by NSN (National Stock Number) and condition grade (Unissued, Grade 1 Serviceable, Grade 2 Field) to help active-duty service members clear CIF or complete packing lists without paying inflated Statement of Charges fees.
+  2. **Fort Bragg CIF Turn-In & Layout Readiness:** Replacement USGI issue gear by NSN (National Stock Number) and condition grade (Unissued, Grade 1 Serviceable, Grade 2 Field) to help active-duty service members clear CIF or complete packing lists without paying inflated Statement of Charges fees.
   3. **On-Site Sewing & Uniform Alterations Department:** Rapid walk-in and 24-hour turnaround sewing for OCP nametapes, U.S. Army tapes, rank insignia, skill badges (Airborne, Air Assault, Pathfinder, CIB/EFMB), unit patches, and heavy-duty tactical ruck/zipper repair.
   4. **Verified eBay Mail-Order Vault:** Out-of-state buyers can purchase verified individual surplus items via our top-rated eBay storefront (`oldsargessurplus`).
 
