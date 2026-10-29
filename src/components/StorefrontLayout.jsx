@@ -1306,7 +1306,7 @@ export default function StorefrontLayout() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {storeInfo.verifiedLocalReviews.map((rev, idx) => (
+            {(storeInfo.customerReviews || []).map((rev, idx) => (
               <div
                 key={idx}
                 className={`border p-4 space-y-2.5 flex flex-col justify-between ${

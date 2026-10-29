@@ -173,7 +173,7 @@ export default function SewingAlterationsModal() {
               </p>
             </div>
             <a
-              href={`tel:${storeInfo.phoneClean}`}
+              href={`tel:${storeInfo.phoneRaw}`}
               className="text-xs font-mono font-bold text-amber-300 bg-amber-500/10 border border-amber-500/40 px-3 py-1.5 rounded-lg shrink-0 hover:bg-amber-500/20"
             >
               Sew Counter: {storeInfo.phone}
