@@ -238,80 +238,94 @@ export default function EbaySyncModal() {
           </div>
 
           {/* Live Sync Control Bar */}
-          <div className="bg-gradient-to-r from-zinc-900 via-[#151D2B] to-zinc-900 border-2 border-yellow-400/60 p-4 sm:p-5 rounded-xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
-            <div className="space-y-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="bg-emerald-500 text-black font-mono text-[10px] font-black px-2 py-0.5 uppercase">
+          <div className="bg-gradient-to-r from-zinc-900 via-[#151D2B] to-zinc-900 border-2 border-yellow-400/60 p-4 sm:p-5 rounded-xl space-y-4">
+            <div className="space-y-2">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="bg-emerald-500 text-black font-mono text-[10px] font-black px-2.5 py-1 uppercase rounded-xs">
                   {EBAY_STORE_CONFIG.reputationBadge}
                 </span>
-                <span className="text-xs font-mono text-zinc-400">
-                  Last Synced: <strong className="text-white">{ebaySyncMeta.lastSyncedAt}</strong>
+                <span className="text-xs font-mono text-zinc-300 bg-zinc-950/80 border border-zinc-800 px-2.5 py-1 rounded">
+                  Last Synced: <strong className="text-emerald-400">{ebaySyncMeta.lastSyncedAt}</strong>
                 </span>
               </div>
-              <h3 className="text-base sm:text-lg font-black text-white">
-                eBay Seller Feed: @{EBAY_STORE_CONFIG.sellerHandle} ({ebaySyncMeta.syncedListingsCount} Active Synced Listings)
-              </h3>
-              <p className="text-xs text-zinc-300">
-                Top Detected eBay Brands:{' '}
-                <span className="font-mono text-yellow-300">
-                  {EBAY_STORE_CONFIG.topBrands.join(' • ')}
+
+              <h3 className="text-lg sm:text-xl font-black text-white">
+                eBay Seller Feed: @{EBAY_STORE_CONFIG.sellerHandle}{' '}
+                <span className="text-yellow-400 font-mono text-base">
+                  ({ebaySyncMeta.syncedListingsCount} Active Synced Listings)
                 </span>
-              </p>
+              </h3>
+
+              <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+                <span className="text-xs text-zinc-400 font-mono mr-1">
+                  Top Detected eBay Brands:
+                </span>
+                {EBAY_STORE_CONFIG.topBrands.map((brand) => (
+                  <span
+                    key={brand}
+                    className="text-[11px] font-mono font-bold text-yellow-300 bg-zinc-950/90 border border-yellow-400/30 px-2 py-0.5 rounded"
+                  >
+                    {brand}
+                  </span>
+                ))}
+              </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5 shrink-0">
-              <button
-                type="button"
-                onClick={() =>
-                  setEbaySyncMeta((prev) => ({
-                    ...prev,
-                    autoSyncEnabled: !prev.autoSyncEnabled
-                  }))
-                }
-                className={`px-3 py-2.5 rounded-lg font-mono text-xs font-bold border cursor-pointer transition ${
-                  ebaySyncMeta.autoSyncEnabled
-                    ? 'bg-emerald-950/90 border-emerald-500/60 text-emerald-300'
-                    : 'bg-zinc-900 border-zinc-700 text-zinc-400'
-                }`}
-              >
-                {ebaySyncMeta.autoSyncEnabled
-                  ? '✓ 15-Min Auto-Sync: ON'
-                  : '15-Min Auto-Sync: PAUSED'}
-              </button>
+            <div className="pt-3 border-t border-zinc-800/90 flex flex-wrap items-center justify-between gap-2.5">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={handleRunLiveSync}
+                  className="px-4 py-2.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 shadow-lg cursor-pointer transition active:scale-95"
+                >
+                  <RefreshCw className={`w-4 h-4 shrink-0 ${isSyncingAnim ? 'animate-spin' : ''}`} />
+                  <span>
+                    {ebaySyncMeta.hasImportedBatch
+                      ? 'Re-Sync @oldsargessurplus eBay Feed'
+                      : 'Sync Latest @oldsargessurplus eBay Feed Now'}
+                  </span>
+                </button>
 
-              <button
-                type="button"
-                onClick={handleRunLiveSync}
-                className="px-4 py-2.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-black font-black text-xs sm:text-sm uppercase tracking-wider flex items-center gap-2 shadow-lg cursor-pointer transition"
-              >
-                <RefreshCw className={`w-4 h-4 ${isSyncingAnim ? 'animate-spin' : ''}`} />
-                <span>
-                  {ebaySyncMeta.hasImportedBatch
-                    ? '✓ Re-Sync @oldsargessurplus eBay Feed'
-                    : '🔄 Sync Latest @oldsargessurplus eBay Feed Now'}
-                </span>
-              </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setEbaySyncMeta((prev) => ({
+                      ...prev,
+                      autoSyncEnabled: !prev.autoSyncEnabled
+                    }))
+                  }
+                  className={`px-3 py-2.5 rounded-lg font-mono text-xs font-bold border cursor-pointer transition ${
+                    ebaySyncMeta.autoSyncEnabled
+                      ? 'bg-emerald-950/90 border-emerald-500/60 text-emerald-300'
+                      : 'bg-zinc-900 border-zinc-700 text-zinc-400'
+                  }`}
+                >
+                  {ebaySyncMeta.autoSyncEnabled
+                    ? '✓ 15-Min Auto-Sync: ON'
+                    : '15-Min Auto-Sync: PAUSED'}
+                </button>
+              </div>
 
               <a
                 href={EBAY_STORE_CONFIG.storeUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="px-3 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-mono text-xs font-bold flex items-center gap-1.5"
+                className="px-3.5 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-100 font-mono text-xs font-bold flex items-center gap-1.5 transition"
               >
-                <span>Open eBay Store</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Open Official eBay Store</span>
+                <ExternalLink className="w-3.5 h-3.5 text-yellow-400" />
               </a>
             </div>
           </div>
 
           {/* Real eBay Seller Hub CSV File Dropzone */}
-          <div className="bg-zinc-900/90 border-2 border-dashed border-emerald-500/60 rounded-xl p-4 sm:p-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="space-y-1">
+          <div className="bg-zinc-900/90 border-2 border-dashed border-emerald-500/60 rounded-xl p-4 sm:p-5 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+            <div className="space-y-1 flex-1 min-w-0">
               <div className="flex items-center gap-2 text-emerald-400 font-mono text-xs font-black uppercase">
-                <Upload className="w-4 h-4" />
+                <Upload className="w-4 h-4 shrink-0" />
                 <span>Option B • Instant eBay Seller Hub Active Listings (.CSV) Dropzone</span>
               </div>
-              <p className="text-xs text-zinc-300">
+              <p className="text-xs text-zinc-300 leading-relaxed">
                 In eBay Seller Hub (<code className="font-mono text-yellow-300">Listings → Active → Download CSV</code>), export your active listings and upload the <code className="font-mono">.csv</code> file here to auto-populate all 8 Bays on the spot.
               </p>
               {csvImportSummary && (
@@ -325,14 +339,14 @@ export default function EbaySyncModal() {
               <button
                 type="button"
                 onClick={handleDownloadSampleCsv}
-                className="px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-mono text-xs font-bold flex items-center gap-1.5 cursor-pointer"
+                className="px-3 py-2.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-mono text-xs font-bold flex items-center gap-1.5 cursor-pointer"
                 title="Download a sample eBay Seller Hub CSV file to test uploading"
               >
                 <Download className="w-3.5 h-3.5 text-yellow-400" />
                 <span>Download Sample eBay CSV</span>
               </button>
 
-              <label className="px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow">
+              <label className="px-4 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-black font-black text-xs uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow">
                 <Upload className="w-3.5 h-3.5" />
                 <span>Upload eBay Active CSV</span>
                 <input
